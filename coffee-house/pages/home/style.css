@@ -1,0 +1,250 @@
+* {
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+  }
+  
+  a {
+    list-style: none;
+    text-decoration: none;
+    list-style-type: none;
+  }
+  
+  li {
+    list-style-type: none;
+  }
+  html {
+    font-family: 'Inter', sans-serif;
+  }
+  .body {
+    background-color: #E1D4C9;
+  }
+  .container{
+    max-width: 1360px;
+    margin: 0 auto;
+   
+  }
+  .header__inner{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+   padding-top: 18px;
+   padding-bottom: 20px;
+    
+  }
+  .nav__list{
+    display: flex;
+    gap:40px;
+    padding-left: 0px;
+  }
+  .nav__link{
+    font-size: 16px;
+font-style: normal;
+font-weight: 600;
+    color: #403F3D;
+  }
+  .menu{
+    display: flex;
+    align-items: flex-end;
+    gap:8px;
+    border-bottom: 2px solid #E1D4C9;
+  }
+  .menu:hover{
+    border-bottom: 2px solid #403F3D;
+  }
+  .menu__link{
+    color: #403F3D;
+    font-size: 16px;
+font-style: normal;
+font-weight: 600;
+  }
+  .menu__img{
+    padding-bottom: 2px;
+  }
+  .menu__btn{
+    display: none;
+  }
+
+   .enjoy__img{
+  background-image: url("../../assets/images/img-hero.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+  border-radius: 40px;
+  max-width: 1360px;
+  height: 645px;
+  padding-left: 100px;
+  padding-top: 100px;
+
+  } 
+
+  .enjoy__content{
+    display: flex;
+flex-direction: column;
+    max-width: 530px;
+    color: #E1D4C9;
+    gap:25px;
+  }
+  .enjoy__title{
+    font-size: 72px;
+font-style: normal;
+font-weight: 600;
+line-height: 105%;
+
+  }
+
+  .enjoy__text{
+    font-size: 16px;
+font-style: normal;
+font-weight: 400;
+line-height: 150%;
+  }
+  h1 > span {
+    font-style: italic;
+    color: #B0907A;
+    
+  }
+
+  .enjoy__button{
+    display: flex;
+justify-content: space-evenly;
+font-size: 16px;
+font-style: normal;
+font-weight: 600;
+color:  #403F3D;
+    border-radius: 100px;
+background:  #E1D4C9;
+padding: 23px 58px;
+width: 200px;
+height: 64px;
+border: none;
+cursor: pointer;
+
+  }
+
+  .img-coffee-cup{
+    display: none;
+   
+      }
+  .enjoy__button:hover > .img-coffee-cup{
+    
+display:block;
+  }
+.favorite{
+  margin-top: 100px;
+}
+.favorite-container{
+  display: flex;
+  flex-direction: column;
+}
+  .favorite__title{
+    font-size: 60px;
+font-style: normal;
+font-weight: 600;
+color:  #403F3D;
+text-align: center;
+margin-bottom: 0px;
+margin-top: 0px;
+  }
+  h2 > span {
+    font-style: italic;
+    color: #B0907A;
+    
+  }
+.slider{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 45px;
+  
+}
+  .slider__btn{
+    display: flex;
+width: 60px;
+height: 60px;
+justify-content: center;
+align-items: center;
+border-radius: 100px;
+border: 1px solid  #665F55;
+margin-left: 2px;
+margin-right: 2px;
+cursor: pointer;
+  }
+  .slider__btn:hover > svg{
+  
+    fill: #5046e5;
+  }
+  .slider__btn:hover{
+    background:  #665F55;
+  
+  }
+  svg{
+    fill: #5046e5;
+  }
+  .slider__wrapper{
+    display: flex;
+    max-width: 480px;
+    overflow: hidden;
+  }
+  .coffee-card{
+    
+    color:  #403F3D;
+    text-align: center;
+    font-style: normal;
+  }
+  .coffee-card__img{
+    width: 480px;
+    height: 480px;
+  }
+  .coffee-card__title{
+    font-size: 24px;
+    font-weight: 600;
+    margin-top: 20px;
+    margin-bottom: 0px;
+    
+  }
+  .coffee-card__description{
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 150%;
+    margin-top: 16px;
+  }
+  .coffee-card__price{
+    font-size: 24px;
+    font-weight: 600;
+    margin-top: 16px;
+   
+  }
+
+  .slider__progress{
+    display: flex;
+    gap:12px;
+    margin: 0 auto;
+    margin-top: 40px;
+  }
+  progress {
+    appearance: none;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    border-radius: 100px;
+    background-size: auto;
+    }
+  progress::-webkit-progress-value {
+    background: #665F55;
+    border-radius: 100px;
+    }
+  progress::-webkit-progress-bar {
+    background: #C1B6AD;
+    border-radius: 100px;
+    }
+  .progress-bar{
+    width: 40px;
+height: 4px;
+background:  #C1B6AD;
+  }
+
+  .about__title{
+    font-size: 60px;
+font-style: normal;
+font-weight: 600;
+line-height: 125%;
+  }

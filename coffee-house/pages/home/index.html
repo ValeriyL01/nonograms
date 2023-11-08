@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Montserrat:ital@1&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="normalize.css">
+    <link rel="stylesheet" href="style.css">
+    <title>coffee-house</title>
+</head>
+<body class = "body">
+    <header class="header">
+        <div class="container header__inner">
+            <a href="#" class="logo">
+                <img src="../../assets/icons/logo.svg" alt="" class="logo__img">
+            </a>
+            <nav class="nav">
+                <ul class="nav__list">
+                  <li class="nav__item"><a href="#" class="nav__link">Favorite coffee</a></li>
+                  <li class="nav__item"><a href="#" class="nav__link">About</a></li>
+                  <li class="nav__item"><a href="#" class="nav__link">Mobile app</a></li>
+                  <li class="nav__item"><a href="#" class="nav__link">Contacts</a></li>
+                </ul>
+                <button class="menu__btn" type="button"> 
+                    <span class="btn__line"></span>
+                    <span class="btn__line"></span>
+                    <span class="btn__line"></span>
+                   
+                    
+                  </button>
+            </nav>
+            <div class="menu">
+                <a href="" class="menu__link">Menu</a>
+                <img src="../../assets/icons/coffee-cup.svg" alt="" class="menu__img">
+            </div>
+        </div>
+    </header>
+    <section class="enjoy">
+        <div class="container">
+            <div class="enjoy__img">
+                <div class="enjoy__content">
+                    <h1 class="enjoy__title"><span>Enjoy</span> premium coffee at our charming cafe</h1>
+                    <p class="enjoy__text">With its inviting atmosphere and delicious coffee options, the Coffee House Resource is a popular destination for coffee lovers and those seeking a warm and inviting space to enjoy their favorite beverage.</p>
+                    <button class="enjoy__button">Menu <img class= "img-coffee-cup"src="../../assets/icons/coffee-cup.svg" alt=""></button>
+                </div>
+            </div>
+            
+        </div>
+    </section>
+    <section class="favorite">
+        <div class="container favorite-container">
+            <h2 class="favorite__title">Choose your <span>favorite</span> coffee</h2>
+            <div class="slider">
+                <div class="slider__btn btn-left"><img src="../../assets/icons/arrow-left.svg" alt=""></div>
+                <div class="slider__wrapper">
+                    <div class="coffee-card">
+                        <img class='coffee-card__img' src="../../assets/images/coffee-slider-1.png" alt="">
+                        <h5 class="coffee-card__title">S’mores Frappuccino</h5>
+                        <p class="coffee-card__description">This new drink takes an espresso and mixes it with brown sugar and cinnamon before being topped with oat milk.</p>
+                        <span class="coffee-card__price">$5.50</span>
+                    </div>
+                    <div class="coffee-card">
+                        <img class='coffee-card__img' src="../../assets/images/coffee-slider-2.png" alt="">
+                        <h5 class="coffee-card__title">Caramel Macchiato</h5>
+                        <p class="coffee-card__description">Fragrant and unique classic espresso with rich caramel-peanut syrup, with cream under whipped thick foam.</p>
+                        <span class="coffee-card__price">$5.00</span>
+                    </div>
+                    <div class="coffee-card">
+                        <img class='coffee-card__img' src="../../assets/images/coffee-slider-3.png" alt="">
+                        <h5 class="coffee-card__title">Ice coffee</h5>
+                        <p class="coffee-card__description">A popular summer drink that tones and invigorates. Prepared from coffee, milk and ice.</p>
+                        <span class="coffee-card__price">$4.50</span>
+                    </div>
+                </div>
+                <div class="slider__btn btn-right"><img src="../../assets/icons/arrow-right.svg" alt=""></div>
+               
+            </div>
+            <div class="slider__progress">
+                <progress class='progress-bar'id="progress-card1" max="100" value="100"></progress>
+                <progress class='progress-bar'id="progress-card2" max="100" value="0"></progress>
+                <progress class='progress-bar'id="progress-card3" max="100" value="0"></progress>
+            </div>
+        </div>
+    </section>
+   
+    <script src="index.js"></script>    
+</body>
+</html>
