@@ -24,6 +24,8 @@
   .body {
     background-color: #E1D4C9;
     padding-bottom: 40px;
+    padding-left: 40px;
+    padding-right: 40px;
   }
   .container{
     max-width: 1360px;
@@ -312,6 +314,7 @@ cursor: pointer;
     z-index: 20;
     opacity: 0;
     visibility: hidden;
+   
 }
 
 .modal--active {
@@ -347,7 +350,7 @@ font-weight: 600;
 margin-top: 0px;
 margin-bottom: 12px;
 }
-.modal__description-text .size .additives{
+.modal__description-text,.size, .additives{
     color:  #403F3D;
 font-size: 16px;
 font-style: normal;
@@ -369,7 +372,7 @@ line-height: 150%;
     margin-top: 8px;
 }
 
-  .tab-item-size{
+  .tab-item-size,.tab-item-additives {
     display: flex;
 padding: 6px 14px 6px 6px;
 justify-content: center;
@@ -386,6 +389,7 @@ line-height: 150%;
 cursor: pointer;
 transition: 0.3s;
   }
+
 .tab-item-icon{
     display: flex;
     width: 30px;
@@ -411,6 +415,21 @@ transition: 0.3s;
   }
 
   .tab-item-size--active .tab-item-icon{
+    background:  #E1D4C9;
+  }
+  .tab-item-additives:hover{
+    color:  #E1D4C9;
+    background:  #665F55;
+  }
+  .tab-item-additives:hover .tab-item-icon{
+    background:  #E1D4C9;
+  }
+  .tab-item-additives--active{
+    color:  #E1D4C9;
+    background:  #665F55;
+  }
+
+  .tab-item-additives--active .tab-item-icon{
     background:  #E1D4C9;
   }
 

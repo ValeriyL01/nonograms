@@ -23,10 +23,13 @@
   }
   .body {
     background-color: #E1D4C9;
+    padding-left: 40px;
+    padding-right: 40px;
   }
   .container{
     max-width: 1360px;
     margin: 0 auto;
+   
    
   }
   .header__inner{
