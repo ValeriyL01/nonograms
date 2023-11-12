@@ -436,7 +436,7 @@ progress::-webkit-progress-bar {
   font-size: 16px;
   margin-bottom: 15px;
   border-bottom: 2px solid #665f55;
-  width: 262px;
+  width: 266px;
   transition: 0.3s;
   cursor: pointer;
 }
@@ -449,3 +449,4 @@ progress::-webkit-progress-bar {
 .contacts__icon {
   padding-right: 8px;
 }
+
