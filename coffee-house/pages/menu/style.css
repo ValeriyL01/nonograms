@@ -318,7 +318,7 @@ html {
 .modal__container {
   display: flex;
   gap: 20px;
-  width: 800px;
+  max-width: 800px;
   border-radius: 40px;
   background: #e1d4c9;
   margin: 0 auto;
@@ -360,7 +360,7 @@ html {
 .modal__tabs {
   display: flex;
   gap: 8px;
-  width: 361px;
+  max-width: 361px;
   margin-left: auto;
   margin-right: auto;
   margin-bottom: 20px;
@@ -550,6 +550,14 @@ html {
   .menu__refresh-btn:hover {
     background: #665f55;
   }
+  .modal__container{
+max-width: 656px;
+margin-left: 20px;
+margin-right: 20px;
+  }
+  .modal__tabs{
+    flex-wrap: wrap;
+  }
 }
 @media (max-width: 768px) {
   .logo {
@@ -652,5 +660,13 @@ html {
   .body {
     padding-left: 16px;
     padding-right: 16px;
+  }
+}
+@media (max-width: 700px) {
+  .modal__img-wrapper{
+    display: none;
+  }
+  .modal__tabs {
+    max-width:358px ;
   }
 }
