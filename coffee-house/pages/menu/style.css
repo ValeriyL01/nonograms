@@ -669,4 +669,43 @@ margin-right: 20px;
   .modal__tabs {
     max-width:358px ;
   }
+  .menu__product{
+    flex-direction: column;
+align-items: center;
+  }
+}
+@media (max-width: 620px) {
+  h2{
+    font-size: 32px;
+  }
+  .menu__title{
+    font-size: 32px;
+  }
+
+.sotial-links, .contacts {
+  max-width:316px
+}
+.footer {
+  margin-top: 10px; 
+}
+.footer-container{
+ padding-top: 35px;
+ padding-bottom: 45px;
+}
+.contacts__title{
+ margin-top: 40px;
+}
+.tabs {
+  gap: 8px;
+}
+.product-card-title {
+
+  margin-top: 22px;
+ 
+}
+.product-card-description {
+  
+  margin-top: 11px;
+  
+}
 }
