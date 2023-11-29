@@ -125,6 +125,7 @@ html {
 .tab-item:hover {
   color: #e1d4c9;
   background: #665f55;
+  border: 1px solid #665f55;
 }
 .tab-item:hover .icon {
   background: #e1d4c9;
@@ -132,6 +133,8 @@ html {
 .tab-item--active {
   color: #e1d4c9;
   background: #665f55;
+  border: 1px solid #665f55;
+  cursor: auto;
 }
 .icon {
   display: flex;
@@ -252,10 +255,10 @@ html {
   stroke: #c1b6ad;
 }
 .sotial-link:hover {
-  background: #fff;
+  background: #E1D4C9;
 }
 .sotial-link:hover > svg {
-  stroke: #e1d4c9;
+  stroke: #403F3D
 }
 .contacts__wrapper {
   gap: 16px;
@@ -284,13 +287,19 @@ html {
   cursor: pointer;
 }
 .contacts__item:nth-child(1){
+max-width: 185px;
+}
+.contacts__item:nth-child(2){
   max-width: 185px;
   }
-  .contacts__item:nth-child(2){
-    max-width: 185px;
-    }
-.contacts__item:hover {
+.contacts__item:nth-child(1):hover {
   border-bottom: 2px solid #e1d4c9;
+}
+.contacts__item:nth-child(2):hover {
+  border-bottom: 2px solid #e1d4c9;
+}
+.contacts__item:nth-child(3) {
+  cursor: auto;
 }
 .contacts__item > a {
   color: #e1d4c9;
