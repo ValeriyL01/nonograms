@@ -24,6 +24,7 @@ html {
   background-color: #e1d4c9;
   padding-left: 40px;
   padding-right: 40px;
+  padding-bottom: 40px;
 }
 .container {
   max-width: 1360px;
@@ -68,6 +69,8 @@ html {
 }
 .menu:hover {
   border-bottom: 2px solid #403f3d;
+  
+
 }
 .menu__link {
   color: #403f3d;
@@ -134,12 +137,17 @@ h1 > span {
   height: 64px;
   border: none;
   cursor: pointer;
+  transition: 0.3s;
 }
 
 .img-coffee-cup {
   opacity: 0;
  
   transition: 0.3s;
+}
+.enjoy__button:hover  {
+  padding: 23px 55px;
+  
 }
 .enjoy__button:hover > .img-coffee-cup {
   opacity: 1;
@@ -414,10 +422,10 @@ progress::-webkit-progress-bar {
   stroke: #c1b6ad;
 }
 .sotial-link:hover {
-  background: #fff;
+  background: #E1D4C9;
 }
 .sotial-link:hover > svg {
-  stroke: #e1d4c9;
+  stroke: #403F3D
 }
 .contacts__wrapper {
   gap: 16px;
@@ -451,9 +459,16 @@ max-width: 185px;
 .contacts__item:nth-child(2){
   max-width: 185px;
   }
-.contacts__item:hover {
+.contacts__item:nth-child(1):hover {
   border-bottom: 2px solid #e1d4c9;
 }
+.contacts__item:nth-child(2):hover {
+  border-bottom: 2px solid #e1d4c9;
+}
+.contacts__item:nth-child(3) {
+  cursor: auto;
+}
+
 .contacts__item > a {
   color: #e1d4c9;
 }
