@@ -255,6 +255,7 @@ html {
   stroke: #c1b6ad;
 }
 .sotial-link:hover {
+  border: 1px solid #E1D4C9;
   background: #E1D4C9;
 }
 .sotial-link:hover > svg {
