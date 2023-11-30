@@ -308,8 +308,7 @@ html {
     cursor: auto;
   }
 
-max-width: 185px;
-}
+
 .contacts__item:nth-child(2){
   max-width: 185px;
   }
