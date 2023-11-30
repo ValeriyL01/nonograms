@@ -24,6 +24,7 @@ html {
   background-color: #e1d4c9;
   padding-left: 40px;
   padding-right: 40px;
+  padding-bottom: 40px;
 }
 .container {
   max-width: 1360px;
@@ -49,7 +50,7 @@ html {
 }
 .nav__item {
   border-bottom: 2px solid #e1d4c9;
-  transition: 0.3s;
+  transition: 0.4s;
 }
 .nav__item-burger {
   display: none;
@@ -123,15 +124,20 @@ h1 > span {
   border-radius: 100px;
   background: #e1d4c9;
   padding: 23px 58px;
+  padding-left: 75px;
   width: 200px;
   height: 64px;
   border: none;
   cursor: pointer;
+  transition: 0.3s;
 }
 
 .img-coffee-cup {
-  display: block;
+  opacity: 0;
+
+  transition: 0.3s;
 }
+
 .favorite {
   margin-top: 100px;
 }
@@ -412,13 +418,19 @@ progress::-webkit-progress-bar {
   transition: 0.3s;
   cursor: pointer;
 }
-
+.contacts__item:nth-child(1){
+  max-width: 185px;
+  }
+  .contacts__item:nth-child(2){
+    max-width: 185px;
+    }
 .contacts__item > a {
   color: #e1d4c9;
 }
 .contacts__icon {
   padding-right: 8px;
 }
+
 @media (hover: hover){
   .nav__item:hover {
     border-bottom: 2px solid #403f3d;
@@ -426,8 +438,12 @@ progress::-webkit-progress-bar {
   .menu:hover {
     border-bottom: 2px solid #403f3d;
   }
+  .enjoy__button:hover  {
+    padding: 23px 55px;
+  
+  }
   .enjoy__button:hover > .img-coffee-cup {
-    display: block;
+    opacity: 1;
   }
   .slider__btn:hover > svg {
     stroke: #e1d4c9;
@@ -449,16 +465,22 @@ progress::-webkit-progress-bar {
     fill: #e1d4c9;
   }
   .sotial-link:hover {
-    background: #fff;
+    background: #E1D4C9;
   }
   .sotial-link:hover > svg {
-    stroke: #e1d4c9;
+    stroke: #403F3D
   }
-  .contacts__item:hover {
+  .contacts__item:nth-child(1):hover {
     border-bottom: 2px solid #e1d4c9;
   }
+  .contacts__item:nth-child(2):hover {
+    border-bottom: 2px solid #e1d4c9;
+  }
+ 
 }
-
+.contacts__item:nth-child(3) {
+  cursor: auto;
+}
 @media (hover: none){
   .nav__item:active {
     border-bottom: 2px solid #403f3d;
@@ -643,7 +665,10 @@ progress::-webkit-progress-bar {
     font-weight: 600;
     line-height: 125%;
   }
-
+  .img-coffee-cup {
+    opacity: 1;
+  
+  }
   .nav__link {
     font-size: 32px;
   }
@@ -653,6 +678,9 @@ progress::-webkit-progress-bar {
 
   .favorite__title {
     line-height: 125%;
+  }
+  .enjoy__button{
+    padding: 23px 58px;
   }
   .slider {
     margin-top: 40px;
