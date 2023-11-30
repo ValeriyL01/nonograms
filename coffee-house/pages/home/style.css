@@ -56,6 +56,12 @@ html {
   display: none;
 }
 
+
+.nav__item:hover {
+  border-bottom: 2px solid #403f3d;
+  
+}
+
 .menu {
   display: flex;
   align-items: flex-end;
@@ -64,6 +70,11 @@ html {
   transition: 0.3s;
 }
 
+.menu:hover {
+  border-bottom: 2px solid #403f3d;
+  
+
+}
 .menu__link {
   color: #403f3d;
   font-size: 16px;
@@ -135,7 +146,19 @@ h1 > span {
 .img-coffee-cup {
   opacity: 0;
 
+  
+
+ 
   transition: 0.3s;
+}
+.enjoy__button:hover  {
+  padding: 23px 55px;
+  
+}
+.enjoy__button:hover > .img-coffee-cup {
+  opacity: 1;
+  
+
 }
 
 .favorite {
@@ -392,6 +415,15 @@ progress::-webkit-progress-bar {
   stroke: #c1b6ad;
 }
 
+
+.sotial-link:hover {
+  border: 1px solid #E1D4C9;
+  background: #E1D4C9;
+}
+.sotial-link:hover > svg {
+  stroke: #403F3D
+}
+
 .contacts__wrapper {
   gap: 16px;
 }
@@ -419,17 +451,35 @@ progress::-webkit-progress-bar {
   cursor: pointer;
 }
 .contacts__item:nth-child(1){
+
   max-width: 185px;
   }
   .contacts__item:nth-child(2){
     max-width: 185px;
     }
+
+max-width: 185px;
+}
+.contacts__item:nth-child(2){
+  max-width: 185px;
+  }
+.contacts__item:nth-child(1):hover {
+  border-bottom: 2px solid #e1d4c9;
+}
+.contacts__item:nth-child(2):hover {
+  border-bottom: 2px solid #e1d4c9;
+}
+.contacts__item:nth-child(3) {
+  cursor: auto;
+}
+
 .contacts__item > a {
   color: #e1d4c9;
 }
 .contacts__icon {
   padding-right: 8px;
 }
+
 
 @media (hover: hover){
   .nav__item:hover {
@@ -786,5 +836,7 @@ progress::-webkit-progress-bar {
   padding-top: 12px;
 }
 } 
+
+
 
 
