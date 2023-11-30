@@ -56,10 +56,12 @@ html {
   display: none;
 }
 
+
 .nav__item:hover {
   border-bottom: 2px solid #403f3d;
   
 }
+
 .menu {
   display: flex;
   align-items: flex-end;
@@ -67,6 +69,7 @@ html {
   border-bottom: 2px solid #e1d4c9;
   transition: 0.3s;
 }
+
 .menu:hover {
   border-bottom: 2px solid #403f3d;
   
@@ -142,6 +145,9 @@ h1 > span {
 
 .img-coffee-cup {
   opacity: 0;
+
+  
+
  
   transition: 0.3s;
 }
@@ -152,7 +158,9 @@ h1 > span {
 .enjoy__button:hover > .img-coffee-cup {
   opacity: 1;
   
+
 }
+
 .favorite {
   margin-top: 100px;
 }
@@ -191,12 +199,7 @@ h2 > span {
 .slider__btn-svg {
   stroke: #403f3d;
 }
-.slider__btn:hover > svg {
-  stroke: #e1d4c9;
-}
-.slider__btn:hover {
-  background: #665f55;
-}
+
 .slider__wrapper {
   display: flex;
   max-width: 480px;
@@ -276,9 +279,7 @@ progress::-webkit-progress-bar {
   overflow: hidden;
   border-radius: 20px;
 }
-.about__image-container:hover .about__image {
-  transform: scale(1);
-}
+
 .about__image-container:nth-child(1) {
   height: 590px;
 }
@@ -345,19 +346,11 @@ progress::-webkit-progress-bar {
   cursor: pointer;
   transition: 0.3s;
 }
-.download__button:hover {
-  background-color: #665f55;
-  fill: #e1d4c9;
-}
-.download__button:hover .button-text {
-  color: #e1d4c9;
-}
+
 .download-svg {
   fill: #403f3d;
 }
-.download__button:hover .download-svg {
-  fill: #e1d4c9;
-}
+
 .download__images {
   display: block;
   position: relative;
@@ -421,6 +414,8 @@ progress::-webkit-progress-bar {
 .svg-links {
   stroke: #c1b6ad;
 }
+
+
 .sotial-link:hover {
   border: 1px solid #E1D4C9;
   background: #E1D4C9;
@@ -428,6 +423,7 @@ progress::-webkit-progress-bar {
 .sotial-link:hover > svg {
   stroke: #403F3D
 }
+
 .contacts__wrapper {
   gap: 16px;
 }
@@ -455,6 +451,13 @@ progress::-webkit-progress-bar {
   cursor: pointer;
 }
 .contacts__item:nth-child(1){
+
+  max-width: 185px;
+  }
+  .contacts__item:nth-child(2){
+    max-width: 185px;
+    }
+
 max-width: 185px;
 }
 .contacts__item:nth-child(2){
@@ -476,4 +479,364 @@ max-width: 185px;
 .contacts__icon {
   padding-right: 8px;
 }
+
+
+@media (hover: hover){
+  .nav__item:hover {
+    border-bottom: 2px solid #403f3d;
+  }
+  .menu:hover {
+    border-bottom: 2px solid #403f3d;
+  }
+  .enjoy__button:hover  {
+    padding: 23px 55px;
+  
+  }
+  .enjoy__button:hover > .img-coffee-cup {
+    opacity: 1;
+  }
+  .slider__btn:hover > svg {
+    stroke: #e1d4c9;
+  }
+  .slider__btn:hover {
+    background: #665f55;
+  }
+  .about__image-container:hover .about__image {
+    transform: scale(1);
+  }
+  .download__button:hover {
+    background-color: #665f55;
+    fill: #e1d4c9;
+  }
+  .download__button:hover .button-text {
+    color: #e1d4c9;
+  }
+  .download__button:hover .download-svg {
+    fill: #e1d4c9;
+  }
+  .sotial-link:hover {
+    background: #E1D4C9;
+  }
+  .sotial-link:hover > svg {
+    stroke: #403F3D
+  }
+  .contacts__item:nth-child(1):hover {
+    border-bottom: 2px solid #e1d4c9;
+  }
+  .contacts__item:nth-child(2):hover {
+    border-bottom: 2px solid #e1d4c9;
+  }
+ 
+}
+.contacts__item:nth-child(3) {
+  cursor: auto;
+}
+@media (hover: none){
+  .nav__item:active {
+    border-bottom: 2px solid #403f3d;
+  }
+  .menu:active {
+    border-bottom: 2px solid #403f3d;
+  }
+  .enjoy__button:active > .img-coffee-cup {
+    display: block;
+  }
+  .slider__btn:active > svg {
+    stroke: #e1d4c9;
+  }
+  .slider__btn:active {
+    background: #665f55;
+  }
+  .about__image-container:active .about__image {
+    transform: scale(1);
+  }
+  .download__button:active {
+    background-color: #665f55;
+    fill: #e1d4c9;
+  }
+  .download__button:active .button-text {
+    color: #e1d4c9;
+  }
+  .download__button:active .download-svg {
+    fill: #e1d4c9;
+  }
+  .sotial-link:active {
+    background: #fff;
+  }
+  .sotial-link:active > svg {
+    stroke: #e1d4c9;
+  }
+  .contacts__item:active {
+    border-bottom: 2px solid #e1d4c9;
+  }
+}
+@media (max-width: 1439px) {
+  .about__image-container {
+    width: 688px;
+  }
+  .about__images {
+    align-content: center;
+    flex-direction: column;
+  }
+  .about__image {
+    transform: scale(1.05);
+  }
+  .about__image-container:nth-child(2) {
+    display: none;
+  }
+  .about__image-container:nth-child(3) {
+    display: none;
+  }
+  .about__image-container:nth-child(4) {
+    bottom: 0px;
+  }
+
+  .mobile-app {
+    margin-top: 190px;
+  }
+  .mobile-app-container {
+    flex-direction: column;
+  }
+  .download {
+    width: auto;
+  }
+  .download__images {
+    position: initial;
+    margin-left: 30px;
+    margin-top: 10px;
+  }
+  .download__button {
+    padding-top: 14px;
+    padding-bottom: 14px;
+  }
+  .footer {
+    margin-top: 100px;
+  }
+}
+
+@media (max-width: 1300px) {
+  .footer-container {
+    flex-direction: column;
+    padding-bottom: 85px;
+  }
+  .contacts__title {
+    margin-top: 100px;
+  }
+  .sotial-links,
+  .contacts {
+    width: 568px;
+  }
+  .contacts__item {
+    margin-bottom: 13px;
+  }
+}
+@media (max-width: 768px) {
+  .logo {
+    position: relative;
+    z-index: 20;
+  }
+  .enjoy__img {
+    padding-left: 60px;
+  }
+  .nav__item-burger {
+    display: flex;
+    align-items: flex-end;
+    gap: 16px;
+    margin-top: 40px;
+  }
+  .menu__img {
+    padding-bottom: 4px;
+  }
+  .menu__link {
+    font-size: 32px;
+  }
+  .nav__list,
+  .menu {
+    display: none;
+  }
+  .menu__btn {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    width: 44px;
+    height: 44px;
+    background-color: inherit;
+    border-radius: 100px;
+    border: 1px solid #665f55;
+    cursor: pointer;
+  }
+  .btn__line {
+    position: absolute;
+    width: 16px;
+    height: 2px;
+    top: 16px;
+    left: 14px;
+    background: #403f3d;
+    border-radius: 2px;
+    transition: 0.3s;
+  }
+  .btn__line:nth-child(1) {
+    top: 16px;
+  }
+  .btn__line:nth-child(2) {
+    top: 24px;
+  }
+  .nav__list--active .btn__line:nth-child(1) {
+    top: 20px;
+    transform: rotate(225deg);
+  }
+  .nav__list--active .btn__line:nth-child(2) {
+    top: 20px;
+    transform: rotate(-225deg);
+  }
+  .nav__list {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 60px;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    left: auto;
+    top: 0px;
+    right: 0px;
+    margin-top: 0px;
+    background-color: #e1d4c9;
+    transform: translateX(100%);
+    transition: 0.5s;
+    padding-right: 0px;
+    padding-left: 0;
+    font-size: 32px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 125%;
+  }
+  .img-coffee-cup {
+    opacity: 1;
+  
+  }
+  .nav__link {
+    font-size: 32px;
+  }
+  .nav__list--active .nav__list {
+    transform: translateX(0%);
+  }
+
+  .favorite__title {
+    line-height: 125%;
+  }
+  .enjoy__button{
+    padding: 23px 58px;
+  }
+  .slider {
+    margin-top: 40px;
+  }
+  .coffee-card__title {
+    margin-top: 18px;
+  }
+  .mobile-app-container {
+    align-items: flex-start;
+  }
+  .contacts__icon {
+    padding-right: 5px;
+}
+}
+
+@media (max-width: 767px) {
+  .body {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+  .slider__progress {
+    margin-top: 42px;
+}
+}
+
+@media (max-width: 720px) {
+  .about__image-container{
+    width: 348px;
+    height: 590px;
+  }
+  .download__images {
+    position: relative;
+  max-width: 348px;
+  margin:40px auto 0px
+}
+.download__buttons{
+  flex-direction: column;
+}
+}
+@media (max-width: 620px) {
+  h2{
+    font-size: 32px;
+  }
+  .enjoy__title{
+    font-size: 42px;
+    line-height: 115%;
+  }
+  .enjoy__text{
+   margin: 14px 0px;
+  }
+  .enjoy__content {
+    max-width: 316px;
+    padding-top: 60px;
+}
+.enjoy__img {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  align-items: flex-start;
+   padding-left: 0px;
+   padding-top: 0px;
+   height: 552px;
+}
+.slider__wrapper{
+  max-width: 348px;
+}
+.coffee-card{
+  max-width: 348px;
+}
+.coffee-card__img {
+  max-width: 348px;
+  height: 348px;
+  object-fit: cover;
+ 
+}
+.sotial-links, .contacts {
+  max-width:316px
+}
+.footer {
+   margin-top: 10px; 
+}
+.footer-container{
+  padding-top: 35px;
+  padding-bottom: 45px;
+}
+.contacts__title{
+  margin-top: 40px;
+}
+}
+
+ @media (max-width: 510px) {
+  .slider {
+    justify-content: center;
+  }
+  .slider__btn{
+    display: none;
+  }
+  
+  .about__image {
+    transform: scale(1.23);
+}
+.download__button {
+  padding-top: 12px;
+}
+} 
+
+
+
 
