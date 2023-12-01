@@ -10,6 +10,24 @@ let numbersCard = [0, 1, 2];
 let axisX1 = null;
 let slideSwitchTime;
 let intervalId;
+function addBurgerMenu() {
+  const btn = document.querySelector('.menu__btn');
+  const nav = document.querySelector('.nav');
+  const navLink = document.querySelectorAll('.nav__link');
+  const body = document.querySelector('.body');
+  btn.addEventListener('click', function () {
+    nav.classList.toggle('nav__list--active');
+    body.classList.toggle('body--lock');
+  });
+  navLink.forEach((el) => {
+    el.addEventListener('click', function () {
+      nav.classList.remove('nav__list--active');
+      body.classList.remove('body--lock');
+    });
+  });
+}
+
+addBurgerMenu();
 const createElement = (tag, className) => {
   const element = document.createElement(tag);
   element.classList.add(className);
