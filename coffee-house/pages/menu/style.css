@@ -123,14 +123,7 @@ html {
 
 
 
-.tab-item:hover {
-  color: #e1d4c9;
-  background: #665f55;
-  border: 1px solid #665f55;
-}
-.tab-item:hover .icon {
-  background: #e1d4c9;
-}
+
 
 .tab-item--active {
   color: #e1d4c9;
@@ -257,13 +250,7 @@ html {
 
 
 
-.sotial-link:hover {
-  border: 1px solid #E1D4C9;
-  background: #E1D4C9;
-}
-.sotial-link:hover > svg {
-  stroke: #403F3D
-}
+
 
 .contacts__wrapper {
   gap: 16px;
@@ -298,26 +285,15 @@ html {
   .contacts__item:nth-child(2){
     max-width: 185px;
     }
-  .contacts__item:nth-child(1):hover {
-    border-bottom: 2px solid #e1d4c9;
-  }
-  .contacts__item:nth-child(2):hover {
-    border-bottom: 2px solid #e1d4c9;
-  }
+
   .contacts__item:nth-child(3) {
     cursor: auto;
   }
 
-
 .contacts__item:nth-child(2){
   max-width: 185px;
   }
-.contacts__item:nth-child(1):hover {
-  border-bottom: 2px solid #e1d4c9;
-}
-.contacts__item:nth-child(2):hover {
-  border-bottom: 2px solid #e1d4c9;
-}
+
 .contacts__item:nth-child(3) {
   cursor: auto;
 }
@@ -501,7 +477,7 @@ html {
   display: none;
 }
 
-@media (hover: hover){
+@media (hover: hover) and (pointer: fine){
   .nav__item:hover {
     border-bottom: 2px solid #403f3d;
   }
@@ -540,6 +516,18 @@ html {
   .modal__close:hover {
     background: #665f55;
     color: #e1d4c9;
+  }
+  .contacts__item:nth-child(1):hover {
+    border-bottom: 2px solid #e1d4c9;
+  }
+  .contacts__item:nth-child(2):hover {
+    border-bottom: 2px solid #e1d4c9;
+  }
+  .menu__refresh-btn:hover > svg {
+    stroke: #e1d4c9;
+  }
+  .menu__refresh-btn:hover {
+    background: #665f55;
   }
 }
 
@@ -583,6 +571,18 @@ html {
   .modal__close:active {
     background: #665f55;
     color: #e1d4c9;
+  }
+  .contacts__item:nth-child(1):active {
+    border-bottom: 2px solid #e1d4c9;
+  }
+  .contacts__item:nth-child(2):active {
+    border-bottom: 2px solid #e1d4c9;
+  }
+  .menu__refresh-btn:active > svg {
+    stroke: #e1d4c9;
+  }
+  .menu__refresh-btn:active {
+    background: #665f55;
   }
 }
 @media (max-width: 1439px) {
@@ -650,12 +650,7 @@ html {
   .menu__refresh-svg {
     stroke: #403f3d;
   }
-  .menu__refresh-btn:hover > svg {
-    stroke: #e1d4c9;
-  }
-  .menu__refresh-btn:hover {
-    background: #665f55;
-  }
+
   .modal__container{
 max-width: 656px;
 margin-left: 20px;
