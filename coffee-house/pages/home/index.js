@@ -2,6 +2,8 @@ const slider = document.querySelector('.slider__card');
 const btnLeft = document.querySelector('.btn-left');
 const btnRight = document.querySelector('.btn-right');
 const progress = document.querySelectorAll('.progress-bar');
+const sliderWrapper = document.querySelector('.slider__wrapper');
+let differencePoints = 0;
 let progressBars = Array.from(progress);
 let progressBarNum = [];
 let activeCard = 0;
@@ -155,7 +157,7 @@ const animation = (duration, draw, removeCard) => {
 
 function loadingProgressBar(number) {
   clearInterval(intervalId);
-  progressBars[number].value = 0;
+  progressBars[number].value
   const maxValue = 100;
   const increment = 1;
   intervalId = setInterval(() => {
@@ -168,6 +170,7 @@ function loadingProgressBar(number) {
   }, 50);
 
   progressBarNum.push(number);
+
 }
 
 loadingProgressBar(0);
@@ -176,14 +179,32 @@ function trackTouchStart(event) {
   const touchStart = event.touches[0];
   axisX1 = touchStart.clientX;
 }
+
 function trackTouchMove(event) {
   if (!axisX1) {
     return;
   }
   let axisX2 = event.touches[0].clientX;
-  let differencePoints = axisX2 - axisX1;
-  differencePoints > 0 ? prevCard() : nextCard();
+   differencePoints = axisX2 - axisX1;
+  
   axisX1 = null;
+  return differencePoints
+}
+function trackTouchEnd() {
+  if(differencePoints === 0){
+    startLoadingProgressBar()
+  }else if(differencePoints > 0){
+    prevCard()
+  }else if(differencePoints < 0){
+    nextCard()
+  }
+  differencePoints = 0
+}
+function stopLoadingProgressBar(){
+  clearInterval(intervalId);
+}
+function startLoadingProgressBar(){
+  loadingProgressBar(activeCard);
 }
 
 btnRight.addEventListener('click', nextCard);
@@ -191,3 +212,8 @@ btnLeft.addEventListener('click', prevCard);
 
 document.addEventListener('touchstart', trackTouchStart);
 document.addEventListener('touchmove', trackTouchMove);
+
+sliderWrapper.addEventListener('mouseover',stopLoadingProgressBar );
+sliderWrapper.addEventListener('mouseout',startLoadingProgressBar );
+sliderWrapper.addEventListener('touchstart', stopLoadingProgressBar);
+sliderWrapper.addEventListener('touchend',trackTouchEnd);
