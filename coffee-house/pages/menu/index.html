@@ -20,7 +20,7 @@
             <li class="nav__item"><a href="../home/index.html#about" class="nav__link">About</a></li>
             <li class="nav__item"><a href="../home/index.html#mobile-app" class="nav__link">Mobile app</a></li>
             <li class="nav__item"><a href="#footer" class="nav__link">Contact us</a></li>
-            <li class="nav__item nav__item-burger">Menu<img src="../../assets/icons/cup-burger.svg" alt="" class="header-button-img"></li>
+            <li class="nav__item nav__item-burger"><a href="#menu" class="nav__link menu__link">Menu<img src="../../assets/icons/cup-burger.svg" alt="" class="header-button-img"></a></li>
           </ul>
           <button class="menu__btn" type="button">
             <span class="btn__line"></span>
@@ -30,96 +30,15 @@
         <div class="header-button">Menu<img src="../../assets/icons/coffee-cup.svg" alt="" class="header-button-img"></div>
       </div>
     </header>
-     <section class="menu">
+     <section class="menu" id = "menu">
       <div class="container menu-container">
         <h1 class="menu__title">Behind each of our cups hides an<span> amazing surprise</span></h1>
-        <div class="tabs menu__tabs">
-          <div class="tab-item tab-item--active">
-            <div class="icon"><img src="../../assets/icons/cup.svg" alt=""></div><span>Coffee</span></div>
-          <div class="tab-item"><div class="icon"><img src="../../assets/icons/kettle.svg" alt=""></div><span>Tea</span></div>
-          <div class="tab-item"><div class="icon"><img src="../../assets/icons/cake.svg" alt=""></div><span>Dessert</span></div>
-        </div>
+        <div class="btns menu__btns">
+          <button class="btn-item btn-item--active" id = 'btn-item1'><span class="icon"><img src="../../assets/icons/cup.svg" alt=""></span><span>Coffee</span></button>
+          <button class="btn-item" id = 'btn-item2'><span class="icon" ><img src="../../assets/icons/kettle.svg" alt=""></span><span>Tea</span></button>
+          <button class="btn-item" id = 'btn-item3'><span class="icon" ><img src="../../assets/icons/cake.svg" alt=""></span><span>Dessert</span></button>
+         </div>
         <div class="menu__product">
-          <div class="menu__product-card">
-            <div class="product-card-img-wrapper">
-              <img class="product-card-img" src="../../assets/images/coffee-1.jpg" alt="">
-            </div>
-            <div class="descriptions">
-              <h6 class="product-card-title">Irish coffee</h6>
-              <p class="product-card-description">Fragrant black coffee with Jameson Irish whiskey and whipped milk</p>
-              <span class="product-card-price">$7.00</span>
-            </div>
-          </div>
-          <div class="menu__product-card">
-            <div class="product-card-img-wrapper">
-              <img class="product-card-img" src="../../assets/images/coffee-2.jpg" alt="">
-            </div>
-            <div class="descriptions">
-              <h6 class="product-card-title">Kahlua coffee</h6>
-              <p class="product-card-description">Classic coffee with milk and Kahlua liqueur under a cap of frothed milk</p>
-              <span class="product-card-price">$7.00</span>
-            </div>
-          </div>
-          <div class="menu__product-card">
-            <div class="product-card-img-wrapper">
-              <img class="product-card-img" src="../../assets/images/coffee-3.jpg" alt="">
-            </div>
-            <div class="descriptions">
-              <h6 class="product-card-title">Honey raf</h6>
-              <p class="product-card-description">Espresso with frothed milk, cream and aromatic honey</p>
-              <span class="product-card-price">$5.50</span>
-            </div>
-          </div>
-          <div class="menu__product-card">
-            <div class="product-card-img-wrapper">
-              <img class="product-card-img" src="../../assets/images/coffee-4.jpg" alt="">
-            </div>
-            <div class="descriptions">
-              <h6 class="product-card-title">Ice cappuccino</h6>
-              <p class="product-card-description">Cappuccino with soft thick foam in summer version with ice</p>
-              <span class="product-card-price">$5.00</span>
-            </div>
-          </div>
-          <div class="menu__product-card">
-            <div class="product-card-img-wrapper">
-              <img class="product-card-img" src="../../assets/images/coffee-5.jpg" alt="">
-            </div>
-            <div class="descriptions">
-              <h6 class="product-card-title">Espresso</h6>
-              <p class="product-card-description">Classic black coffee</p>
-              <span class="product-card-price">$4.50</span>
-            </div>
-          </div>
-          <div class="menu__product-card">
-            <div class="product-card-img-wrapper">
-              <img class="product-card-img" src="../../assets/images/coffee-6.jpg" alt="">
-            </div>
-            <div class="descriptions">
-              <h6 class="product-card-title">Latte</h6>
-              <p class="product-card-description">Espresso coffee with the addition of steamed milk and dense milk foam</p>
-              <span class="product-card-price">$5.50</span>
-            </div>
-          </div>
-          <div class="menu__product-card">
-            <div class="product-card-img-wrapper">
-              <img class="product-card-img" src="../../assets/images/coffee-7.jpg" alt="">
-            </div>
-            <div class="descriptions">
-              <h6 class="product-card-title">Latte macchiato</h6>
-              <p class="product-card-description">Espresso with frothed milk and chocolate</p>
-              <span class="product-card-price">$5.50</span>
-            </div>
-          </div>
-          <div class="menu__product-card">
-            <div class="product-card-img-wrapper">
-              <img class="product-card-img" src="../../assets/images/coffee-8.jpg" alt="">
-            </div>
-            <div class="descriptions">
-              <h6 class="product-card-title">Coffee with cognac</h6>
-              <p class="product-card-description">Fragrant black coffee with cognac and whipped cream</p>
-              <span class="product-card-price">$6.50</span>
-            </div>
-          </div>
           <div class="menu__refresh-btn ">
             <svg class = "menu__refresh-svg" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
               <path d="M21.8883 13.5C21.1645 18.3113 17.013 22 12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C16.1006 2 19.6248 4.46819 21.1679 8"  stroke-linecap="round" stroke-linejoin="round"/>
@@ -137,23 +56,22 @@
             <h6 class="modal__description-title">Irish coffee</h6>
             <p class="modal__description-text">Fragrant black coffee with Jameson Irish whiskey and whipped milk</p>
             <span class="size">Size</span>
-            <div class="modal__tabs">
-              <div class="tab-item-size tab-item-size--active">
-                <div class="tab-item-icon">S</div><span>200 ml</span></div>
-              <div class="tab-item-size"><div class="tab-item-icon">M</div><span>300 ml</span></div>
-              <div class="tab-item-size"><div class="tab-item-icon">L</div><span>400 ml</span></div>
-            </div>
+            <div class="modal__btns">
+              <button class="btn-item-size btn-item-size--active" id = 'btn-size1' disabled ><div class="btn-item-icon">S</div><span id = 'size-s'>200 ml</span></button>
+              <button class="btn-item-size" id = 'btn-size2'><div class="btn-item-icon" >M</div><span id = 'size-m'>300 ml</span></button>
+              <button class="btn-item-size" id = 'btn-size3'><div class="btn-item-icon" >L</div><span id = 'size-l'>400 ml</span></button>
+             </div>
             <span class="additives">Additives</span>
-            <div class="modal__tabs"><div class="tab-item-additives">
-                <div class="tab-item-icon">1</div><span>Sugar</span></div>
-              <div class="tab-item-additives">
-                <div class="tab-item-icon">2</div><span>Cinnamon</span></div>
-              <div class="tab-item-additives">
-                <div class="tab-item-icon">3</div><span>Syrup</span></div>
+            <div class="modal__btns "><div class="btn-item-additives" id = 'btn-additives1'>
+                <div class="btn-item-icon">1</div><span id = 'additives1'>Sugar</span></div>
+              <div class="btn-item-additives" >
+                <div class="btn-item-icon">2</div><span id = 'additives2'>Cinnamon</span></div>
+              <div class="btn-item-additives" >
+                <div class="btn-item-icon">3</div><span id = 'additives3'>Syrup</span></div>
             </div>
             <div class="modal__total">
               <span>Total:</span>
-              <span class="modal__total-price">$7.00</span>
+              <span class="modal__total-price">7.00</span>
             </div>
             <div class="modal__alert"><img src="../../assets/icons/info-empty.svg" alt="">
               <p class="alert-text">
@@ -222,6 +140,7 @@
         </div>
       </div>
     </footer>
-    <script src="index.js"></script>
-  </body>
+    <script  src="products.js"></script>
+    <script  src="index.js"></script>
+ </body>
 </html>
