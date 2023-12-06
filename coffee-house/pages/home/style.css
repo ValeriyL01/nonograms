@@ -62,10 +62,7 @@ html {
 }
 
 
-.nav__item:hover {
-  border-bottom: 2px solid #403f3d;
-  
-}
+
 
 .menu {
   display: flex;
@@ -75,11 +72,7 @@ html {
   transition: 0.3s;
 }
 
-.menu:hover {
-  border-bottom: 2px solid #403f3d;
-  
 
-}
 .menu__link {
   color: #403f3d;
   font-size: 16px;
@@ -175,15 +168,7 @@ h1 > span {
  
   transition: 0.3s;
 }
-.enjoy__button:hover  {
-  padding: 23px 55px;
-  
-}
-.enjoy__button:hover > .img-coffee-cup {
-  opacity: 1;
-  
 
-}
 
 .favorite {
   margin-top: 100px;
@@ -450,13 +435,7 @@ progress::-webkit-progress-bar {
 }
 
 
-.sotial-link:hover {
-  border: 1px solid #E1D4C9;
-  background: #E1D4C9;
-}
-.sotial-link:hover > svg {
-  stroke: #403F3D
-}
+
 
 .contacts__wrapper {
   gap: 16px;
@@ -495,12 +474,7 @@ progress::-webkit-progress-bar {
 .contacts__item:nth-child(2){
   max-width: 185px;
   }
-.contacts__item:nth-child(1):hover {
-  border-bottom: 2px solid #e1d4c9;
-}
-.contacts__item:nth-child(2):hover {
-  border-bottom: 2px solid #e1d4c9;
-}
+
 .contacts__item:nth-child(3) {
   cursor: auto;
 }
@@ -513,7 +487,8 @@ progress::-webkit-progress-bar {
 }
 
 
-@media (hover: hover){
+@media (hover: hover) and (pointer: fine){
+
   .nav__item:hover {
     border-bottom: 2px solid #403f3d;
   }
