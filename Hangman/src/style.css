@@ -1,16 +1,28 @@
 body {
-  background-color: #b287a9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #046f87;
   font-family: 'Rubik Doodle Shadow';
+  min-height: 100vh;
+  padding: 0 20px;
 }
 li {
   list-style-type: none;
 }
+h3 {
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
 .container {
   display: flex;
   justify-content: space-around;
+  gap: 50px;
   max-width: 1440px;
   padding: 100px 50px;
   margin: 0 auto;
+  background-color: aliceblue;
+  border-radius: 10px;
 }
 .hangman-wrapper {
   max-width: 300px;
@@ -29,9 +41,74 @@ li {
   display: flex;
 
   gap: 10px;
+  padding-left: 0px;
   margin-bottom: 30px;
 }
 .answer-letter {
   width: 30px;
   border-bottom: 4px solid black;
+  font-family: 'Rubik';
+  font-size: 1.5rem;
+  text-align: center;
+}
+.answer-letter--open {
+  border-bottom: transparent;
+}
+.keyboard-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  justify-content: center;
+  max-width: 404px;
+  margin-top: 30px;
+}
+.key {
+  font-family: 'Rubik';
+  width: 40px;
+  height: 40px;
+  background-color: #046f87;
+  border: none;
+  color: aliceblue;
+  border-radius: 3px;
+  cursor: pointer;
+}
+.key:hover {
+  background-color: #079fc1;
+}
+@media (max-width: 1000px) {
+  .container {
+    flex-direction: column;
+    align-items: center;
+    padding: 50px 30px;
+  }
+}
+@media (max-width: 520px) {
+  .container {
+    flex-direction: column;
+    align-items: center;
+    padding: 50px 10px;
+  }
+  body {
+    padding: 0 10px;
+  }
+  .keyboard-wrapper {
+    gap: 3px;
+
+    max-width: 348px;
+    margin-top: 30px;
+  }
+  .key {
+    width: 35px;
+    height: 35px;
+
+    border-radius: 3px;
+  }
+}
+@media (max-width: 380px) {
+  .container {
+    padding: 50px 5px;
+  }
+  body {
+    padding: 0 5px;
+  }
 }
