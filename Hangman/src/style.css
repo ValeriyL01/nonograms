@@ -1,0 +1,37 @@
+body {
+  background-color: #b287a9;
+  font-family: 'Rubik Doodle Shadow';
+}
+li {
+  list-style-type: none;
+}
+.container {
+  display: flex;
+  justify-content: space-around;
+  max-width: 1440px;
+  padding: 100px 50px;
+  margin: 0 auto;
+}
+.hangman-wrapper {
+  max-width: 300px;
+}
+.hangman-wrapper__title {
+  margin-top: 30px;
+  text-align: center;
+}
+.game-wrapper {
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
+}
+.answer {
+  display: flex;
+
+  gap: 10px;
+  margin-bottom: 30px;
+}
+.answer-letter {
+  width: 30px;
+  border-bottom: 4px solid black;
+}
