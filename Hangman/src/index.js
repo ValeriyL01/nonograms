@@ -58,7 +58,9 @@ const questions = [
     answer: 'Pound',
   },
 ];
-
+let hintText;
+let answerElement;
+let gameWrapper;
 const createElement = (tag, className) => {
   const element = document.createElement(tag);
   element.classList.add(className);
@@ -79,9 +81,7 @@ function createHangman() {
   container.append(hangmanWrapper);
 }
 createHangman();
-let hintText;
-let answerElement;
-let gameWrapper;
+
 function createGame() {
   gameWrapper = createElement('div', 'game-wrapper');
   answerElement = createElement('ul', 'answer');
@@ -100,7 +100,24 @@ function createGame() {
 }
 
 createGame();
+function createModal() {
+  const modal = createElement('div', 'modal');
+  container.append(modal);
+  const modalContainer = createElement('div', 'modal__container');
+  modal.append(modalContainer);
+  const modalTitle = createElement('h3', 'modal__title');
+  const modalSecretWord = createElement('div', 'modal__secret-word');
+  const secretWord = createElement('span', 'secret-word');
+  const modalButton = createElement('button', 'modal__button');
+  modalContainer.append(modalTitle, modalSecretWord, modalButton);
 
+  modalTitle.innerText = 'Game Over';
+  modalSecretWord.innerText = 'Secret word: ';
+  modalSecretWord.append(secretWord);
+  secretWord.innerText = 'gfgfdhdhd';
+  modalButton.innerText = 'play again';
+}
+createModal();
 function getRandomAnswerAndQuestion() {
   const randomNumber = Math.floor(Math.random() * questions.length);
   const {question} = questions[randomNumber];
