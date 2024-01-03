@@ -46,6 +46,7 @@ h3 {
 }
 .answer-letter {
   width: 30px;
+  height: 25px;
   border-bottom: 4px solid black;
   font-family: 'Rubik';
   font-size: 1.5rem;
@@ -53,6 +54,13 @@ h3 {
 }
 .answer-letter--open {
   border-bottom: transparent;
+}
+.hint-text {
+  padding-left: 3px;
+}
+.guesses-score {
+  color: brown;
+  padding-left: 5px;
 }
 .keyboard-wrapper {
   display: flex;
@@ -75,7 +83,9 @@ h3 {
 .key:hover {
   background-color: #079fc1;
 }
-
+.key--active {
+  background-color: #079fc1;
+}
 .modal {
   display: flex;
   align-items: center;

@@ -61,6 +61,16 @@ const questions = [
 let hintText;
 let answerElement;
 let gameWrapper;
+let hangmanImg;
+let modal;
+let modalTitle;
+let secretWord;
+let guessesScore;
+let word;
+let modalButton;
+let keyboard;
+let attemptCounter = 0;
+let arrGuessedLetters = [];
 const createElement = (tag, className) => {
   const element = document.createElement(tag);
   element.classList.add(className);
@@ -73,10 +83,10 @@ body.append(container);
 
 function createHangman() {
   const hangmanWrapper = createElement('div', 'hangman-wrapper');
-  const hangmanImg = createElement('img', 'hangman-wrapper__img');
+  hangmanImg = createElement('img', 'hangman-wrapper__img');
   const hangmanTitle = createElement('h1', 'hangman-wrapper__title');
   hangmanWrapper.append(hangmanImg, hangmanTitle);
-  hangmanImg.src = './assets/images/hangman-6.svg';
+  hangmanImg.src = './assets/images/hangman-0.svg';
   hangmanTitle.textContent = 'Hangman Game';
   container.append(hangmanWrapper);
 }
@@ -89,26 +99,26 @@ function createGame() {
 
   const hint = createElement('h3', 'hint');
   const guesses = createElement('h3', 'guesses');
-  hint.innerText = 'Hint: ';
-  guesses.innerText = 'Incorrect guesses: ';
+  hint.innerText = `Hint: `;
+  guesses.innerText = 'Incorrect guesses:';
   gameWrapper.append(answerElement, hint, guesses);
   hintText = createElement('span', 'hint-text');
-  const guessesScore = createElement('span', 'guesses-score');
+  guessesScore = createElement('span', 'guesses-score');
   hint.append(hintText);
   guesses.append(guessesScore);
-  guessesScore.innerText = `0 / 6`;
+  guessesScore.innerText = ` 0 / 6`;
 }
 
 createGame();
 function createModal() {
-  const modal = createElement('div', 'modal');
+  modal = createElement('div', 'modal');
   container.append(modal);
   const modalContainer = createElement('div', 'modal__container');
   modal.append(modalContainer);
-  const modalTitle = createElement('h3', 'modal__title');
+  modalTitle = createElement('h3', 'modal__title');
   const modalSecretWord = createElement('div', 'modal__secret-word');
-  const secretWord = createElement('span', 'secret-word');
-  const modalButton = createElement('button', 'modal__button');
+  secretWord = createElement('span', 'secret-word');
+  modalButton = createElement('button', 'modal__button');
   modalContainer.append(modalTitle, modalSecretWord, modalButton);
 
   modalTitle.innerText = 'Game Over';
@@ -118,57 +128,112 @@ function createModal() {
   modalButton.innerText = 'play again';
 }
 createModal();
+
+function restartGame() {
+  arrGuessedLetters = [];
+  attemptCounter = 0;
+  guessesScore.innerText = `${attemptCounter} / 6`;
+  modal.classList.remove('modal--active');
+  document.querySelectorAll('.key').forEach((key) => {
+    key.disabled = false;
+    key.classList.remove('key--active');
+  });
+}
 function getRandomAnswerAndQuestion() {
   const randomNumber = Math.floor(Math.random() * questions.length);
   const {question} = questions[randomNumber];
   const {answer} = questions[randomNumber];
   hintText.innerText = `${question}`;
-  const answerLetter = answer
-    .split('')
-    .map(() => '<li class = "answer-letter"></li>')
-    .join('');
+  let answerLetter = '';
+  for (let i = 1; i <= answer.length; i += 1) {
+    answerLetter += '<li class = "answer-letter"></li>';
+  }
   answerElement.innerHTML = answerLetter;
+  word = answer.toUpperCase();
+  console.log('Ответ:', word);
+  restartGame();
 }
 
 getRandomAnswerAndQuestion();
 
+function gameOver() {
+  modal.classList.add('modal--active');
+  secretWord.innerText = word;
+}
+function victory() {
+  modal.classList.add('modal--active');
+  secretWord.innerText = word;
+  modalTitle.innerText = 'Victory!';
+}
+
+function startGame(letter) {
+  if (word.includes(letter)) {
+    word.split('').forEach((el, i) => {
+      if (el === letter) {
+        arrGuessedLetters.push(letter);
+        const liElements = document.querySelectorAll('li');
+        liElements[i].innerText = letter;
+        liElements[i].classList.add('answer-letter--open');
+      }
+    });
+  } else {
+    attemptCounter += 1;
+  }
+  guessesScore.innerText = `${attemptCounter} / 6`;
+  hangmanImg.src = `./assets/images/hangman-${attemptCounter}.svg`;
+  if (attemptCounter === 6) {
+    gameOver();
+  }
+
+  if (word.length === arrGuessedLetters.length) {
+    victory();
+  }
+}
 function createKeyboard() {
-  const keyboard = createElement('div', 'keyboard-wrapper');
+  keyboard = createElement('div', 'keyboard-wrapper');
   gameWrapper.append(keyboard);
   const letters = [
-    'a',
-    'b',
-    'c',
-    'd',
-    'e',
-    'f',
-    'g',
-    'h',
-    'i',
-    'j',
-    'k',
-    'l',
-    'm',
-    'n',
-    'o',
-    'p',
-    'q',
-    'r',
-    's',
-    't',
-    'u',
-    'v',
-    'w',
-    'x',
-    'y',
-    'z',
+    'A',
+    'B',
+    'C',
+    'D',
+    'E',
+    'F',
+    'G',
+    'H',
+    'I',
+    'J',
+    'K',
+    'L',
+    'M',
+    'N',
+    'O',
+    'P',
+    'Q',
+    'R',
+    'S',
+    'T',
+    'U',
+    'V',
+    'W',
+    'X',
+    'Y',
+    'Z',
   ];
 
   for (let i = 0; i <= letters.length - 1; i += 1) {
     const key = createElement('button', 'key');
     key.innerText = letters[i];
     keyboard.append(key);
+    key.addEventListener('click', () => {
+      key.classList.add('key--active');
+      key.disabled = true;
+      startGame(key.innerText);
+    });
   }
 }
 
 createKeyboard();
+modalButton.addEventListener('click', () => {
+  getRandomAnswerAndQuestion();
+});
