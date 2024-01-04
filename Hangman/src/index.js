@@ -71,6 +71,7 @@ let modalButton;
 let keyboard;
 let attemptCounter = 0;
 let arrGuessedLetters = [];
+let arrayPressedkeys = [];
 const createElement = (tag, className) => {
   const element = document.createElement(tag);
   element.classList.add(className);
@@ -133,10 +134,12 @@ function restartGame() {
   arrGuessedLetters = [];
   attemptCounter = 0;
   guessesScore.innerText = `${attemptCounter} / 6`;
+  hangmanImg.src = `./assets/images/hangman-${attemptCounter}.svg`;
   modal.classList.remove('modal--active');
   document.querySelectorAll('.key').forEach((key) => {
     key.disabled = false;
     key.classList.remove('key--active');
+    arrayPressedkeys = [];
   });
 }
 function getRandomAnswerAndQuestion() {
@@ -230,10 +233,28 @@ function createKeyboard() {
       key.disabled = true;
       startGame(key.innerText);
     });
+
+    document.addEventListener('keydown', (e) => {
+      if (
+        e.key === letters[i].toLowerCase() && // если нажатая кнопка === букве из массива
+        !arrayPressedkeys.includes(letters[i]) // и этой буквы еще нет в массиве нажатых букв
+      ) {
+        // теперь при повторном нажатии условие не будет проходить так так буква уже есть в массиве.
+        arrayPressedkeys.push(letters[i]); // то тогда добавляем нажатую букву в массив
+        key.classList.add('key--active');
+
+        startGame(key.innerText);
+      }
+    });
   }
 }
-
 createKeyboard();
+
 modalButton.addEventListener('click', () => {
   getRandomAnswerAndQuestion();
+});
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Enter') {
+    getRandomAnswerAndQuestion();
+  }
 });
