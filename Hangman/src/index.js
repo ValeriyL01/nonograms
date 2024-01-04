@@ -72,6 +72,12 @@ let keyboard;
 let attemptCounter = 0;
 let arrGuessedLetters = [];
 let arrayPressedkeys = [];
+const clickSound = new Audio('./assets/audio/click.wav');
+const victorySound = new Audio('./assets/audio/victory.mp3');
+const gameOverSound = new Audio('./assets/audio/game over.wav');
+clickSound.volume = 0.2;
+victorySound.volume = 0.2;
+gameOverSound.volume = 0.2;
 const createElement = (tag, className) => {
   const element = document.createElement(tag);
   element.classList.add(className);
@@ -125,7 +131,6 @@ function createModal() {
   modalTitle.innerText = 'Game Over';
   modalSecretWord.innerText = 'Secret word: ';
   modalSecretWord.append(secretWord);
-  secretWord.innerText = 'gfgfdhdhd';
   modalButton.innerText = 'play again';
 }
 createModal();
@@ -162,11 +167,13 @@ getRandomAnswerAndQuestion();
 function gameOver() {
   modal.classList.add('modal--active');
   secretWord.innerText = word;
+  gameOverSound.play();
 }
 function victory() {
   modal.classList.add('modal--active');
   secretWord.innerText = word;
   modalTitle.innerText = 'Victory!';
+  victorySound.play();
 }
 
 function startGame(letter) {
@@ -232,6 +239,7 @@ function createKeyboard() {
       key.classList.add('key--active');
       key.disabled = true;
       startGame(key.innerText);
+      clickSound.play();
     });
 
     document.addEventListener('keydown', (e) => {
@@ -242,7 +250,7 @@ function createKeyboard() {
         // теперь при повторном нажатии условие не будет проходить так так буква уже есть в массиве.
         arrayPressedkeys.push(letters[i]); // то тогда добавляем нажатую букву в массив
         key.classList.add('key--active');
-
+        clickSound.play();
         startGame(key.innerText);
       }
     });

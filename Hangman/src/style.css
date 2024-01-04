@@ -101,6 +101,7 @@ h3 {
   z-index: 20;
   opacity: 0;
   visibility: hidden;
+  transition: 0.5s;
 }
 
 .modal--active {
