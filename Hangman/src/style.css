@@ -51,9 +51,20 @@ h3 {
   font-family: 'Rubik';
   font-size: 1.5rem;
   text-align: center;
+  animation-duration: 0.4s;
+  animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 }
 .answer-letter--open {
   border-bottom: transparent;
+  animation-name: showLetter;
+}
+@keyframes showLetter {
+  from {
+    margin-top: -20px;
+  }
+  to {
+    margin-top: 0px;
+  }
 }
 .hint-text {
   padding-left: 3px;
@@ -65,7 +76,7 @@ h3 {
 .keyboard-wrapper {
   display: flex;
   flex-wrap: wrap;
-  gap: 4px;
+  gap: 5px;
   justify-content: center;
   max-width: 404px;
   margin-top: 30px;
@@ -79,12 +90,19 @@ h3 {
   color: aliceblue;
   border-radius: 3px;
   cursor: pointer;
+
+  box-shadow: 0px 3px 0px 0px #32414e66;
+  position: relative;
+  bottom: 3px;
 }
 .key:hover {
   background-color: #079fc1;
 }
 .key--active {
   background-color: #079fc1;
+  box-shadow: none;
+  bottom: 0px;
+  transition: 0.1s;
 }
 .modal {
   display: flex;
@@ -101,14 +119,18 @@ h3 {
   z-index: 20;
   opacity: 0;
   visibility: hidden;
-  transition: 0.5s;
+  transition: 0.1s;
 }
 
 .modal--active {
   opacity: 1;
   visibility: visible;
 }
-
+.modal--active .modal__container {
+  animation-name: showModal;
+  animation-duration: 0.9s;
+  animation-timing-function: cubic-bezier(0.14, 0.95, 0.38, 1.19);
+}
 .modal__container {
   display: flex;
   flex-direction: column;
@@ -120,6 +142,15 @@ h3 {
   background: aliceblue;
   margin: 0 auto;
   padding: 16px;
+}
+
+@keyframes showModal {
+  from {
+    margin-top: -1000px;
+  }
+  to {
+    margin-top: 0px;
+  }
 }
 .modal__title {
   margin-top: 30px;
@@ -157,16 +188,20 @@ h3 {
     padding: 0 10px;
   }
   .keyboard-wrapper {
-    gap: 3px;
+    gap: 4px;
 
     max-width: 348px;
     margin-top: 30px;
   }
   .key {
-    width: 35px;
-    height: 35px;
+    width: 34px;
+    height: 34px;
+    bottom: 2px;
+  }
 
-    border-radius: 3px;
+  .key--active {
+    box-shadow: none;
+    bottom: 0px;
   }
 }
 @media (max-width: 380px) {

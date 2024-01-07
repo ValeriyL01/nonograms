@@ -57,7 +57,20 @@ const questions = [
     question: 'What is the currency of the United Kingdom?',
     answer: 'Pound',
   },
+  {
+    question: 'What is the capital of Germany?',
+    answer: 'Berlin',
+  },
+  {
+    question: 'Which band is known for the hit song "Bohemian Rhapsody"?',
+    answer: 'Queen',
+  },
+  {
+    question: 'Which country hosted the 2016 Summer Olympics?',
+    answer: 'Brazil',
+  },
 ];
+// HTML элементы
 let hintText;
 let answerElement;
 let gameWrapper;
@@ -69,15 +82,18 @@ let guessesScore;
 let word;
 let modalButton;
 let keyboard;
+//--
 let attemptCounter = 0;
 let arrGuessedLetters = [];
 let arrayPressedkeys = [];
 const clickSound = new Audio('./assets/audio/click.wav');
 const victorySound = new Audio('./assets/audio/victory.mp3');
 const gameOverSound = new Audio('./assets/audio/game over.wav');
-clickSound.volume = 0.2;
-victorySound.volume = 0.2;
-gameOverSound.volume = 0.2;
+const letterSound = new Audio('./assets/audio/letter2.mp3');
+const arrSound = [clickSound, victorySound, gameOverSound, letterSound];
+for (let i = 0; i <= arrSound.length - 1; i += 1) {
+  arrSound[i].volume = 0.2;
+}
 const createElement = (tag, className) => {
   const element = document.createElement(tag);
   element.classList.add(className);
@@ -103,7 +119,6 @@ function createGame() {
   gameWrapper = createElement('div', 'game-wrapper');
   answerElement = createElement('ul', 'answer');
   container.append(gameWrapper);
-
   const hint = createElement('h3', 'hint');
   const guesses = createElement('h3', 'guesses');
   hint.innerText = `Hint: `;
@@ -127,8 +142,6 @@ function createModal() {
   secretWord = createElement('span', 'secret-word');
   modalButton = createElement('button', 'modal__button');
   modalContainer.append(modalTitle, modalSecretWord, modalButton);
-
-  modalTitle.innerText = 'Game Over';
   modalSecretWord.innerText = 'Secret word: ';
   modalSecretWord.append(secretWord);
   modalButton.innerText = 'play again';
@@ -141,7 +154,8 @@ function restartGame() {
   guessesScore.innerText = `${attemptCounter} / 6`;
   hangmanImg.src = `./assets/images/hangman-${attemptCounter}.svg`;
   modal.classList.remove('modal--active');
-  document.querySelectorAll('.key').forEach((key) => {
+  document.querySelectorAll('.key').forEach((el) => {
+    const key = el;
     key.disabled = false;
     key.classList.remove('key--active');
     arrayPressedkeys = [];
@@ -167,6 +181,7 @@ getRandomAnswerAndQuestion();
 function gameOver() {
   modal.classList.add('modal--active');
   secretWord.innerText = word;
+  modalTitle.innerText = 'Game Over';
   gameOverSound.play();
 }
 function victory() {
@@ -184,6 +199,7 @@ function startGame(letter) {
         const liElements = document.querySelectorAll('li');
         liElements[i].innerText = letter;
         liElements[i].classList.add('answer-letter--open');
+        letterSound.play();
       }
     });
   } else {
@@ -240,16 +256,22 @@ function createKeyboard() {
       key.disabled = true;
       startGame(key.innerText);
       clickSound.play();
+      arrayPressedkeys.push(letters[i]);
     });
 
     document.addEventListener('keydown', (e) => {
       if (
-        e.key === letters[i].toLowerCase() && // если нажатая кнопка === букве из массива
-        !arrayPressedkeys.includes(letters[i]) // и этой буквы еще нет в массиве нажатых букв
+        // если нажатая кнопка === букве из массива
+        e.key === letters[i].toLowerCase() &&
+        // и этой буквы еще нет в массиве нажатых букв
+        !arrayPressedkeys.includes(letters[i])
+        // теперь при повторном нажатии условие не будет проходить
+        // так так буква уже есть в массиве.
       ) {
-        // теперь при повторном нажатии условие не будет проходить так так буква уже есть в массиве.
-        arrayPressedkeys.push(letters[i]); // то тогда добавляем нажатую букву в массив
+        // то тогда добавляем нажатую букву в массив
+        arrayPressedkeys.push(letters[i]);
         key.classList.add('key--active');
+        key.disabled = true;
         clickSound.play();
         startGame(key.innerText);
       }
