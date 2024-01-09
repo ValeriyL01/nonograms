@@ -86,6 +86,7 @@ let keyboard;
 let attemptCounter = 0;
 let arrGuessedLetters = [];
 let arrayPressedkeys = [];
+let previousRandomNumber;
 const clickSound = new Audio('./assets/audio/click.wav');
 const victorySound = new Audio('./assets/audio/victory.mp3');
 const gameOverSound = new Audio('./assets/audio/game over.wav');
@@ -162,7 +163,16 @@ function restartGame() {
   });
 }
 function getRandomAnswerAndQuestion() {
-  const randomNumber = Math.floor(Math.random() * questions.length);
+  function generateRandomNumber(maxValue) {
+    let randomNum = Math.floor(Math.random() * maxValue);
+    while (randomNum === previousRandomNumber) {
+      randomNum = Math.floor(Math.random() * maxValue);
+    }
+    previousRandomNumber = randomNum;
+
+    return randomNum;
+  }
+  const randomNumber = generateRandomNumber(questions.length);
   const {question} = questions[randomNumber];
   const {answer} = questions[randomNumber];
   hintText.innerText = `${question}`;
