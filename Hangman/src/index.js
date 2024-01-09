@@ -92,7 +92,7 @@ const gameOverSound = new Audio('./assets/audio/game over.wav');
 const letterSound = new Audio('./assets/audio/letter2.mp3');
 const arrSound = [clickSound, victorySound, gameOverSound, letterSound];
 for (let i = 0; i <= arrSound.length - 1; i += 1) {
-  arrSound[i].volume = 0.2;
+  arrSound[i].volume = 0.4;
 }
 const createElement = (tag, className) => {
   const element = document.createElement(tag);
@@ -218,39 +218,18 @@ function startGame(letter) {
 function createKeyboard() {
   keyboard = createElement('div', 'keyboard-wrapper');
   gameWrapper.append(keyboard);
+  // prettier-ignore
   const letters = [
-    'A',
-    'B',
-    'C',
-    'D',
-    'E',
-    'F',
-    'G',
-    'H',
-    'I',
-    'J',
-    'K',
-    'L',
-    'M',
-    'N',
-    'O',
-    'P',
-    'Q',
-    'R',
-    'S',
-    'T',
-    'U',
-    'V',
-    'W',
-    'X',
-    'Y',
-    'Z',
+    'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J',
+    'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T',
+    'U', 'V', 'W', 'X', 'Y', 'Z',
   ];
 
   for (let i = 0; i <= letters.length - 1; i += 1) {
     const key = createElement('button', 'key');
     key.innerText = letters[i];
     keyboard.append(key);
+    // eslint-disable-next-line no-loop-func
     key.addEventListener('click', () => {
       key.classList.add('key--active');
       key.disabled = true;
@@ -259,6 +238,7 @@ function createKeyboard() {
       arrayPressedkeys.push(letters[i]);
     });
 
+    // eslint-disable-next-line no-loop-func
     document.addEventListener('keydown', (e) => {
       if (
         // если нажатая кнопка === букве из массива
@@ -284,7 +264,7 @@ modalButton.addEventListener('click', () => {
   getRandomAnswerAndQuestion();
 });
 document.addEventListener('keydown', (e) => {
-  if (e.key === 'Enter') {
+  if (e.key === 'Enter' && modal.classList.contains('modal--active')) {
     getRandomAnswerAndQuestion();
   }
 });
