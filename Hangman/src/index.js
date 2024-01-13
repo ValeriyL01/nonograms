@@ -70,6 +70,9 @@ const questions = [
     answer: 'Brazil',
   },
 ];
+console.log(
+  'Для ввода текста с физической клавиатуры смените раскладку на "EN"',
+);
 // HTML элементы
 let hintText;
 let answerElement;
