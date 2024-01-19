@@ -1,3 +1,29 @@
 body {
-  background-color: brown;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #bee5ee;
+  min-height: 100vh;
+  padding: 0 20px;
+}
+
+.container {
+  background-color: #f4f5f6;
+  max-width: 1920px;
+  margin: 0 auto;
+}
+.playing-field {
+  display: flex;
+  max-width: 210px;
+
+  flex-wrap: wrap;
+}
+.cell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border: 1px solid black;
+  cursor: pointer;
 }
