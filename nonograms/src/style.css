@@ -27,3 +27,6 @@ body {
   border: 1px solid black;
   cursor: pointer;
 }
+.cell-black {
+  background-color: black;
+}

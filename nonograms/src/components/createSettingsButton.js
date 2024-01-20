@@ -26,11 +26,11 @@ const createSettingsButtons = () => {
     const optionFormLevels3 = createElement('option', 'settings__form-option');
 
     labelFormLevels.setAttribute('for', 'levels');
+    selectFormLevels.setAttribute('name', 'levels');
     labelFormLevels.innerText = 'levels';
-
+    selectFormLevels.value = '5x5';
     optionFormLevels1.value = '5x5';
     optionFormLevels1.innerText = '5x5';
-
     optionFormLevels2.value = '10x10';
     optionFormLevels2.innerText = '10x10';
 
@@ -38,6 +38,9 @@ const createSettingsButtons = () => {
     optionFormLevels3.innerText = '15x15';
     levelsForm.append(labelFormLevels, selectFormLevels);
     selectFormLevels.append(optionFormLevels1, optionFormLevels2, optionFormLevels3);
+    selectFormLevels.addEventListener('change', () => {
+      console.log(selectFormLevels.value);
+    });
   };
 
   createSwitchingLevels();
