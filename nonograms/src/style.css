@@ -14,9 +14,28 @@ body {
 }
 .playing-field {
   display: flex;
+  align-items: flex-end;
+  flex-direction: column;
+}
+.playing-field-wrapper {
+  display: flex;
   max-width: 210px;
-
   flex-wrap: wrap;
+  /* border-top: 1px solid black;
+  border-left: 1px solid black; */
+}
+.top-clues-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  max-width: 210px;
+}
+.playing-field-left-clues-wrapper {
+  display: flex;
+}
+.playing-field-left-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  max-width: 126px;
 }
 .cell {
   display: flex;
@@ -26,6 +45,14 @@ body {
   height: 40px;
   border: 1px solid black;
   cursor: pointer;
+}
+.cell-left {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border: 1px solid black;
 }
 .cell-black {
   background-color: black;
