@@ -6,16 +6,17 @@ const createElement = (tag, className) => {
 let selectFormLevels;
 let selectFormImages;
 let resetGame;
+let solutionBtn;
 const createSettingsButtons = () => {
   const settings = createElement('div', 'settings');
   resetGame = createElement('button', 'settings__reset');
-  const solution = createElement('button', 'settings__solution');
+  solutionBtn = createElement('button', 'settings__solution');
   const continueLastGame = createElement('button', 'settings__continue-last-game');
   const randomGame = createElement('button', 'settings__random-game');
   const themeGame = createElement('button', 'settings__theme');
 
   resetGame.innerText = 'reset';
-  solution.innerText = 'solution';
+  solutionBtn.innerText = 'solution';
   continueLastGame.innerText = 'continue last game';
   randomGame.innerText = 'random game';
   themeGame.innerText = 'theme';
@@ -70,7 +71,7 @@ const createSettingsButtons = () => {
   //--
 
   levelsForm.append(labelFormLevels, selectFormLevels, labelFormImages, selectFormImages);
-  settings.append(resetGame, solution, continueLastGame, randomGame, themeGame, levelsForm);
+  settings.append(resetGame, solutionBtn, continueLastGame, randomGame, themeGame, levelsForm);
   return settings;
 };
-export {createSettingsButtons, selectFormLevels, selectFormImages, resetGame};
+export {createSettingsButtons, selectFormLevels, selectFormImages, resetGame, solutionBtn};

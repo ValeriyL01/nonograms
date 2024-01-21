@@ -1,6 +1,12 @@
 import './style.css';
 import './index.html';
-import {createSettingsButtons, selectFormLevels, selectFormImages, resetGame} from './components/createSettingsButton';
+import {
+  createSettingsButtons,
+  selectFormLevels,
+  selectFormImages,
+  resetGame,
+  solutionBtn,
+} from './components/createSettingsButton';
 
 import data from './components/matrix';
 
@@ -19,6 +25,7 @@ const playingFieldWrapper = createElement('div', 'playing-field-wrapper');
 const playingFieldLeftWrapper = createElement('div', 'playing-field-left-wrapper');
 gameContainer.append(playingField, createSettingsButtons());
 playingField.append(topCluesWrapper, playingFieldLeftCluesWrapper);
+const arrCellMatrix = []; // матрица html элементов ячеек
 // const correctСlickСounter = 0;
 let selectValueLevels = selectFormLevels.value;
 const selectValueImages = selectFormImages.value;
@@ -40,7 +47,6 @@ const createLeftClues = (dataLeft) => {
   }
 };
 
-// const arrCell = [];
 // const resetGames = (level) => {
 //   let cycleLength = 25;
 //   if (level === 5) {
@@ -52,10 +58,23 @@ const createLeftClues = (dataLeft) => {
 //   }
 
 //   for (let i = 0; i < cycleLength; i += 1) {
-//     arrCell[i].classList.remove('cell--true');
 //     arrCell[i].classList.remove('cell--activ');
 //   }
 // };
+
+const showSolution = (dataMatrix, level) => {
+  const matrixImage = dataMatrix[0][1];
+  for (let i = 0; i < level; i += 1) {
+    for (let j = 0; j < level; j += 1) {
+      if (arrCellMatrix[i][j].classList.contains('cell--activ')) {
+        arrCellMatrix[i][j].classList.remove('cell--activ');
+      }
+      if (matrixImage.matrix[i][j] === 1) {
+        arrCellMatrix[i][j].classList.add('cell--activ');
+      }
+    }
+  }
+};
 
 const game = (dataMatrix, level) => {
   const arrayFilledCells = [];
@@ -63,15 +82,16 @@ const game = (dataMatrix, level) => {
   const arrayEmptyCells = [];
   const matrixImage = dataMatrix[0][1];
   for (let i = 0; i < level; i += 1) {
+    arrCellMatrix[i] = [];
     for (let j = 0; j < level; j += 1) {
       const cell = createElement('div', 'cell');
-      //  arrCell.push(cell);
+
       cell.textContent = '';
       playingFieldWrapper.append(cell);
       if (matrixImage.matrix[i][j] === 1) {
         arrayFilledCells.push(1);
-        // cell.classList.add('cell--activ');
       }
+      arrCellMatrix[i][j] = cell;
       let isClick = false;
       let isClickEmptyCells = false;
       document.addEventListener('click', (event) => {
@@ -100,7 +120,7 @@ const game = (dataMatrix, level) => {
         if (arrayFilledCells.length === arrayGuessedCells.length && arrayEmptyCells.length === 0) {
           console.log('ура');
         }
-        //---
+        //-------
       });
 
       // клик правой кнопкой мыши
@@ -145,3 +165,7 @@ selectFormLevels.addEventListener('change', () => {
 // resetGame.addEventListener('click', () => {
 //   resetGames();
 // });
+
+solutionBtn.addEventListener('click', () => {
+  showSolution(data, selectValueLevels);
+});
