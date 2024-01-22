@@ -70,6 +70,9 @@ const createSettingsButtons = () => {
 
     optionFormImage.value = countValue;
     countValue += 1;
+    if (countValue === 4) {
+      countValue = 0;
+    }
     optionFormImage.innerText = nameImages[i];
     selectFormImages.append(optionFormImage);
   }

@@ -17,7 +17,6 @@ const createElement = (tag, className) => {
 };
 const body = document.querySelector('body');
 const gameContainer = createElement('div', 'container');
-
 const playingField = createElement('div', 'playing-field');
 const topCluesWrapper = createElement('div', 'top-clues-wrapper');
 const timerElement = createElement('div', 'timer');
@@ -25,18 +24,19 @@ const playingFieldLeftCluesWrapper = createElement('div', 'playing-field-left-cl
 const playingFieldWrapper = createElement('div', 'playing-field-wrapper');
 const playingFieldLeftWrapper = createElement('div', 'playing-field-left-wrapper');
 const timerTopCluesWrapper = createElement('div', 'timer-top-clues-wrapper');
+
 body.append(gameContainer);
 playingField.append(timerElement);
 gameContainer.append(playingField, createSettingsButtons());
 playingField.append(timerTopCluesWrapper, playingFieldLeftCluesWrapper);
 timerTopCluesWrapper.append(timerElement, topCluesWrapper);
+
 timerElement.innerHTML = '00:00';
 let timer = 0;
 let timerInterval;
 const arrCellMatrix = []; // матрица html элементов ячеек
 const arrCellTop = []; // массив html элементов подсказок сверху
 const arrCellLeft = []; // массив html элементов подсказок слева
-// const correctСlickСounter = 0;
 let selectValueLevels = selectFormLevels.value;
 let selectValueImages = selectFormImages.value;
 
@@ -75,20 +75,15 @@ const createLeftClues = (dataLeft) => {
   }
 };
 
-// const resetGames = (level) => {
-//   let cycleLength = 25;
-//   if (level === 5) {
-//     cycleLength = 5 * 5;
-//   } else if (level === 10) {
-//     cycleLength = 10 * 10;
-//   } else if (level === 15) {
-//     cycleLength = 15 * 15;
-//   }
-
-//   for (let i = 0; i < cycleLength; i += 1) {
-//     arrCell[i].classList.remove('cell--activ');
-//   }
-// };
+const resetGames = (level) => {
+  for (let i = 0; i < level; i += 1) {
+    for (let j = 0; j < level; j += 1) {
+      arrCellMatrix[i][j].classList.remove('cell--activ');
+    }
+  }
+  timerElement.innerHTML = '00:00';
+  stopTimer();
+};
 
 const showSolution = (dataMatrix, level) => {
   const matrixImage = dataMatrix[0][selectValueImages];
@@ -103,11 +98,10 @@ const showSolution = (dataMatrix, level) => {
     }
   }
 };
-
+const arrayFilledCells = [];
+const arrayGuessedCells = [];
+const arrayEmptyCells = [];
 const game = (dataMatrix, level) => {
-  const arrayFilledCells = [];
-  const arrayGuessedCells = [];
-  const arrayEmptyCells = [];
   const matrixImage = dataMatrix[0][0];
   for (let i = 0; i < level; i += 1) {
     arrCellMatrix[i] = [];
@@ -146,7 +140,7 @@ const game = (dataMatrix, level) => {
           }
         }
         if (arrayFilledCells.length === arrayGuessedCells.length && arrayEmptyCells.length === 0) {
-          console.log('ура');
+          console.log(`Great! You have solved the nonogram in ${timerElement.innerHTML} seconds!`);
           stopTimer();
         }
         //-------
@@ -185,20 +179,36 @@ selectFormLevels.addEventListener('change', () => {
 //--
 
 // -- выбор картинки для игры
-selectFormImages.addEventListener('change', () => {
+const selectionPictures = (ValueImages) => {
   selectValueImages = selectFormImages.value;
+  let lengthCycle = 15;
+  let level = 0;
+  if (ValueImages >= 0 && ValueImages <= 4) {
+    lengthCycle = 15;
+    level = 0;
+  } else if (ValueImages >= 5 && ValueImages <= 9) {
+    lengthCycle = 30;
+    level = 1;
+  } else if (ValueImages >= 10 && ValueImages <= 14) {
+    lengthCycle = 45;
+    level = 2;
+  }
+
   // -- изменение подсказок
-  for (let i = 0; i < 15; i += 1) {
-    arrCellTop[i].textContent = data[0][selectValueImages].topClues[i];
-    arrCellLeft[i].textContent = data[0][selectValueImages].leftClues[i];
+  for (let i = 0; i < lengthCycle; i += 1) {
+    arrCellTop[i].textContent = data[level][selectValueImages].topClues[i];
+    arrCellLeft[i].textContent = data[level][selectValueImages].leftClues[i];
   }
   //---
-});
-//--
+};
 
-// resetGame.addEventListener('click', () => {
-//   resetGames();
-// });
+selectFormImages.addEventListener('change', () => {
+  selectionPictures(selectValueImages);
+});
+
+resetGame.addEventListener('click', () => {
+  resetGames(selectValueLevels);
+});
 
 solutionBtn.addEventListener('click', () => {
   showSolution(data, selectValueLevels);
