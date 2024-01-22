@@ -17,24 +17,52 @@ const createElement = (tag, className) => {
 };
 const body = document.querySelector('body');
 const gameContainer = createElement('div', 'container');
-body.append(gameContainer);
+
 const playingField = createElement('div', 'playing-field');
 const topCluesWrapper = createElement('div', 'top-clues-wrapper');
+const timerElement = createElement('div', 'timer');
 const playingFieldLeftCluesWrapper = createElement('div', 'playing-field-left-clues-wrapper');
 const playingFieldWrapper = createElement('div', 'playing-field-wrapper');
 const playingFieldLeftWrapper = createElement('div', 'playing-field-left-wrapper');
+const timerTopCluesWrapper = createElement('div', 'timer-top-clues-wrapper');
+body.append(gameContainer);
+playingField.append(timerElement);
 gameContainer.append(playingField, createSettingsButtons());
-playingField.append(topCluesWrapper, playingFieldLeftCluesWrapper);
+playingField.append(timerTopCluesWrapper, playingFieldLeftCluesWrapper);
+timerTopCluesWrapper.append(timerElement, topCluesWrapper);
+timerElement.innerHTML = '00:00';
+let timer = 0;
+let timerInterval;
 const arrCellMatrix = []; // матрица html элементов ячеек
+const arrCellTop = []; // массив html элементов подсказок сверху
+const arrCellLeft = []; // массив html элементов подсказок слева
 // const correctСlickСounter = 0;
 let selectValueLevels = selectFormLevels.value;
-const selectValueImages = selectFormImages.value;
+let selectValueImages = selectFormImages.value;
+
+// -- таймер
+function startTimer() {
+  timerInterval = setInterval(() => {
+    timer += 1;
+    const minutes = Math.floor(timer / 60)
+      .toString()
+      .padStart(2, '0');
+    const seconds = (timer % 60).toString().padStart(2, '0');
+    timerElement.innerHTML = `${minutes}:${seconds}`;
+  }, 1000);
+}
+
+function stopTimer() {
+  clearInterval(timerInterval);
+}
+//-----
 
 const createTopClues = (dataTop) => {
   for (let i = 0; i < 15; i += 1) {
     const cellTop = createElement('div', 'cell');
-    cellTop.textContent = dataTop[0][1].topClues[i];
+    cellTop.textContent = dataTop[0][0].topClues[i];
     topCluesWrapper.append(cellTop);
+    arrCellTop.push(cellTop);
   }
 };
 
@@ -42,8 +70,8 @@ const createLeftClues = (dataLeft) => {
   for (let i = 0; i < 15; i += 1) {
     const cellLeft = createElement('div', 'cell-left');
     playingFieldLeftWrapper.append(cellLeft);
-
-    cellLeft.textContent = dataLeft[0][1].leftClues[i];
+    cellLeft.textContent = dataLeft[0][0].leftClues[i];
+    arrCellLeft.push(cellLeft);
   }
 };
 
@@ -63,7 +91,7 @@ const createLeftClues = (dataLeft) => {
 // };
 
 const showSolution = (dataMatrix, level) => {
-  const matrixImage = dataMatrix[0][1];
+  const matrixImage = dataMatrix[0][selectValueImages];
   for (let i = 0; i < level; i += 1) {
     for (let j = 0; j < level; j += 1) {
       if (arrCellMatrix[i][j].classList.contains('cell--activ')) {
@@ -80,7 +108,7 @@ const game = (dataMatrix, level) => {
   const arrayFilledCells = [];
   const arrayGuessedCells = [];
   const arrayEmptyCells = [];
-  const matrixImage = dataMatrix[0][1];
+  const matrixImage = dataMatrix[0][0];
   for (let i = 0; i < level; i += 1) {
     arrCellMatrix[i] = [];
     for (let j = 0; j < level; j += 1) {
@@ -119,6 +147,7 @@ const game = (dataMatrix, level) => {
         }
         if (arrayFilledCells.length === arrayGuessedCells.length && arrayEmptyCells.length === 0) {
           console.log('ура');
+          stopTimer();
         }
         //-------
       });
@@ -156,10 +185,15 @@ selectFormLevels.addEventListener('change', () => {
 //--
 
 // -- выбор картинки для игры
-// selectFormImages.addEventListener('change', () => {
-//   selectValueImages = selectFormImages.value;
-//   console.log(selectValueImages);
-// });
+selectFormImages.addEventListener('change', () => {
+  selectValueImages = selectFormImages.value;
+  // -- изменение подсказок
+  for (let i = 0; i < 15; i += 1) {
+    arrCellTop[i].textContent = data[0][selectValueImages].topClues[i];
+    arrCellLeft[i].textContent = data[0][selectValueImages].leftClues[i];
+  }
+  //---
+});
 //--
 
 // resetGame.addEventListener('click', () => {
@@ -169,3 +203,5 @@ selectFormLevels.addEventListener('change', () => {
 solutionBtn.addEventListener('click', () => {
   showSolution(data, selectValueLevels);
 });
+
+playingFieldWrapper.addEventListener('click', startTimer, {once: true});

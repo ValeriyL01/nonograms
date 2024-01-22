@@ -1,5 +1,5 @@
 :root {
-  --width-cell: 30px;
+  --width-cell: 20px;
 }
 
 body {
@@ -49,6 +49,13 @@ body {
 }
 .playing-field-left-wrapper10 {
   max-width: calc(var(--width-cell) * 3 + 6px);
+}
+.timer-top-clues-wrapper {
+  display: flex;
+}
+.timer {
+  padding-right: 15px;
+  padding-top: 25px;
 }
 .cell {
   display: flex;

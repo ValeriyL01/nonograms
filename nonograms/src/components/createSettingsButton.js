@@ -55,12 +55,17 @@ const createSettingsButtons = () => {
     'shess(5x5)',
     'snowflake(5x5)',
     'home(10x10)',
-    'ggg',
-    'gggg',
-    'ggggg',
-    'jj',
+    'home(10x10)',
+    'home(10x10)',
+    'home(10x10)',
+    'home(10x10)',
+    'ggg(15x15)',
+    'ggg(15x15)',
+    'ggg(15x15)',
+    'ggg(15x15)',
+    'ggg(15x15)',
   ];
-  for (let i = 0; i <= 9; i += 1) {
+  for (let i = 0; i <= 14; i += 1) {
     optionFormImage = createElement('option', 'settings__form-option');
 
     optionFormImage.value = countValue;
