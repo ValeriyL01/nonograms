@@ -17,7 +17,11 @@ const createElement = (tag, className) => {
 };
 const body = document.querySelector('body');
 const gameContainer = createElement('div', 'container');
+const victoryWrapper = createElement('div', 'victory-wrapper');
+const victoryMessage = createElement('span', 'victory-message');
+
 const playingField = createElement('div', 'playing-field');
+const playingFieldContainer = createElement('div', 'playing-field-container');
 const topCluesWrapper = createElement('div', 'top-clues-wrapper');
 const timerElement = createElement('div', 'timer');
 const playingFieldLeftCluesWrapper = createElement('div', 'playing-field-left-clues-wrapper');
@@ -26,9 +30,10 @@ const playingFieldLeftWrapper = createElement('div', 'playing-field-left-wrapper
 const timerTopCluesWrapper = createElement('div', 'timer-top-clues-wrapper');
 
 body.append(gameContainer);
-playingField.append(timerElement);
-gameContainer.append(playingField, createSettingsButtons());
-playingField.append(timerTopCluesWrapper, playingFieldLeftCluesWrapper);
+playingField.append(playingFieldContainer);
+gameContainer.append(playingField, createSettingsButtons(), victoryWrapper);
+victoryWrapper.append(victoryMessage);
+playingFieldContainer.append(timerElement, timerTopCluesWrapper, playingFieldLeftCluesWrapper);
 timerTopCluesWrapper.append(timerElement, topCluesWrapper);
 
 timerElement.innerHTML = '00:00';
@@ -37,7 +42,7 @@ let timerInterval;
 const arrCellMatrix = []; // матрица html элементов ячеек
 const arrCellTop = []; // массив html элементов подсказок сверху
 const arrCellLeft = []; // массив html элементов подсказок слева
-let selectValueLevels = selectFormLevels.value;
+const selectValueLevels = selectFormLevels.value;
 let selectValueImages = selectFormImages.value;
 
 // -- таймер
@@ -60,7 +65,7 @@ function stopTimer() {
 const createTopClues = (dataTop) => {
   for (let i = 0; i < 15; i += 1) {
     const cellTop = createElement('div', 'cell');
-    cellTop.textContent = dataTop[0][0].topClues[i];
+    cellTop.textContent = dataTop[0].topClues[i];
     topCluesWrapper.append(cellTop);
     arrCellTop.push(cellTop);
   }
@@ -70,7 +75,7 @@ const createLeftClues = (dataLeft) => {
   for (let i = 0; i < 15; i += 1) {
     const cellLeft = createElement('div', 'cell-left');
     playingFieldLeftWrapper.append(cellLeft);
-    cellLeft.textContent = dataLeft[0][0].leftClues[i];
+    cellLeft.textContent = dataLeft[0].leftClues[i];
     arrCellLeft.push(cellLeft);
   }
 };
@@ -79,14 +84,16 @@ const resetGames = (level) => {
   for (let i = 0; i < level; i += 1) {
     for (let j = 0; j < level; j += 1) {
       arrCellMatrix[i][j].classList.remove('cell--activ');
+      arrCellMatrix[i][j].textContent = '';
     }
   }
   timerElement.innerHTML = '00:00';
+  victoryMessage.textContent = '';
   stopTimer();
 };
 
 const showSolution = (dataMatrix, level) => {
-  const matrixImage = dataMatrix[0][selectValueImages];
+  const matrixImage = dataMatrix[selectValueImages];
   for (let i = 0; i < level; i += 1) {
     for (let j = 0; j < level; j += 1) {
       if (arrCellMatrix[i][j].classList.contains('cell--activ')) {
@@ -102,7 +109,7 @@ const arrayFilledCells = [];
 const arrayGuessedCells = [];
 const arrayEmptyCells = [];
 const game = (dataMatrix, level) => {
-  const matrixImage = dataMatrix[0][0];
+  const matrixImage = dataMatrix[0];
   for (let i = 0; i < level; i += 1) {
     arrCellMatrix[i] = [];
     for (let j = 0; j < level; j += 1) {
@@ -116,7 +123,7 @@ const game = (dataMatrix, level) => {
       arrCellMatrix[i][j] = cell;
       let isClick = false;
       let isClickEmptyCells = false;
-      document.addEventListener('click', (event) => {
+      playingFieldWrapper.addEventListener('click', (event) => {
         if (event.target === cell) {
           cell.classList.toggle('cell--activ');
           // ---  алгоритм победы
@@ -140,6 +147,7 @@ const game = (dataMatrix, level) => {
           }
         }
         if (arrayFilledCells.length === arrayGuessedCells.length && arrayEmptyCells.length === 0) {
+          victoryMessage.textContent = `Great! You have solved the nonogram in ${timerElement.innerHTML} seconds!`;
           console.log(`Great! You have solved the nonogram in ${timerElement.innerHTML} seconds!`);
           stopTimer();
         }
@@ -169,40 +177,89 @@ game(data, selectValueLevels);
 playingFieldLeftCluesWrapper.append(playingFieldLeftWrapper, playingFieldWrapper);
 
 // --выбор уровня игры
-selectFormLevels.addEventListener('change', () => {
-  selectValueLevels = selectFormLevels.value;
+// selectFormLevels.addEventListener('change', () => {
+//   selectValueLevels = selectFormLevels.value;
 
-  playingFieldWrapper.classList.add('playing-field-wrapper10');
-  topCluesWrapper.classList.add('top-clues-wrapper10');
-  playingFieldLeftWrapper.classList.add('playing-field-left-wrapper10');
-});
+//   playingFieldWrapper.classList.add('playing-field-wrapper10');
+//   topCluesWrapper.classList.add('top-clues-wrapper10');
+//   playingFieldLeftWrapper.classList.add('playing-field-left-wrapper10');
+// });
 //--
+
+// алгоритм отрисовки матриц и победы
+const creatingMatrices = (dataMatrix) => {
+  const arrayFilledCells1 = [];
+  const arrayGuessedCells1 = [];
+  const arrayEmptyCells1 = [];
+
+  const matrixImage = dataMatrix[selectValueImages];
+  for (let i = 0; i < 5; i += 1) {
+    for (let j = 0; j < 5; j += 1) {
+      arrCellMatrix[i][j].classList.remove('cell--activ');
+      if (matrixImage.matrix[i][j] === 1) {
+        arrayFilledCells1.push(1);
+      }
+      //  arrCellMatrix[i][j].textContent = matrixImage.matrix[i][j];
+      let isClick = false;
+      let isClickEmptyCells = false;
+      playingFieldWrapper.addEventListener('click', (event) => {
+        if (event.target === arrCellMatrix[i][j]) {
+          // ---  алгоритм победы
+          if (matrixImage.matrix[i][j] === 1) {
+            if (!isClick) {
+              arrayGuessedCells1.push(1);
+              isClick = true;
+            } else {
+              arrayGuessedCells1.pop(1);
+              isClick = false;
+            }
+          }
+          if (matrixImage.matrix[i][j] === 0) {
+            if (!isClickEmptyCells) {
+              arrayEmptyCells1.push(1);
+
+              isClickEmptyCells = true;
+            } else {
+              arrayEmptyCells1.pop(1);
+              isClickEmptyCells = false;
+            }
+          }
+        }
+
+        if (arrayFilledCells1.length === arrayGuessedCells1.length && arrayEmptyCells1.length === 0) {
+          victoryMessage.textContent = `Great! You have solved the nonogram in ${timerElement.innerHTML} seconds!`;
+          console.log(`Great! You have solved the nonogram in ${timerElement.innerHTML} seconds!`);
+          stopTimer();
+        }
+        //-------
+      });
+    }
+  }
+};
 
 // -- выбор картинки для игры
 const selectionPictures = (ValueImages) => {
-  selectValueImages = selectFormImages.value;
   let lengthCycle = 15;
-  let level = 0;
+
   if (ValueImages >= 0 && ValueImages <= 4) {
     lengthCycle = 15;
-    level = 0;
   } else if (ValueImages >= 5 && ValueImages <= 9) {
     lengthCycle = 30;
-    level = 1;
   } else if (ValueImages >= 10 && ValueImages <= 14) {
     lengthCycle = 45;
-    level = 2;
   }
-
   // -- изменение подсказок
   for (let i = 0; i < lengthCycle; i += 1) {
-    arrCellTop[i].textContent = data[level][selectValueImages].topClues[i];
-    arrCellLeft[i].textContent = data[level][selectValueImages].leftClues[i];
+    arrCellTop[i].textContent = data[selectValueImages].topClues[i];
+    arrCellLeft[i].textContent = data[selectValueImages].leftClues[i];
   }
   //---
+  creatingMatrices(data);
+  resetGames(selectValueLevels);
 };
 
 selectFormImages.addEventListener('change', () => {
+  selectValueImages = selectFormImages.value;
   selectionPictures(selectValueImages);
 });
 

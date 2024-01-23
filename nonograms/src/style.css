@@ -15,18 +15,25 @@ body {
   background-color: #f4f5f6;
   max-width: 1920px;
   margin: 0 auto;
+  padding: 20px;
 }
 .playing-field {
   display: flex;
   align-items: flex-end;
   flex-direction: column;
 }
+.playing-field-container {
+  display: flex;
+  margin: 0 auto;
+  flex-direction: column;
+  align-items: flex-end;
+}
 .playing-field-wrapper {
   display: flex;
   max-width: calc(var(--width-cell) * 5 + 10px);
   flex-wrap: wrap;
-  /* border-top: 1px solid black;
-  border-left: 1px solid black; */
+  border-top: 0.5px solid black;
+  border-left: 0.5px solid black;
 }
 .playing-field-wrapper10 {
   max-width: calc(var(--width-cell) * 10 + 20px);
@@ -57,6 +64,30 @@ body {
   padding-right: 15px;
   padding-top: 25px;
 }
+.settings {
+  display: flex;
+  flex-direction: column;
+}
+.settings__form {
+  display: flex;
+  justify-content: center;
+  gap: 3px;
+}
+
+.settings-button-wrapper {
+  display: flex;
+  gap: 5px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+.button {
+  height: 25px;
+  background-color: #008497;
+  border: none;
+  color: aliceblue;
+  border-radius: 3px;
+  cursor: pointer;
+}
 .cell {
   display: flex;
   align-items: center;
@@ -76,4 +107,20 @@ body {
 }
 .cell--activ {
   background-color: black;
+}
+.victory-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 40px;
+}
+@media (max-width: 550px) {
+  .settings-button-wrapper {
+    flex-direction: column;
+    align-items: center;
+  }
+  .button {
+    height: 25px;
+    width: 140px;
+  }
 }

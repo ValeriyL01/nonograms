@@ -9,12 +9,18 @@ let resetGame;
 let solutionBtn;
 const createSettingsButtons = () => {
   const settings = createElement('div', 'settings');
+  const settingsButtonWrapper = createElement('div', 'settings-button-wrapper');
   resetGame = createElement('button', 'settings__reset');
+  resetGame.classList.add('button');
   solutionBtn = createElement('button', 'settings__solution');
+  solutionBtn.classList.add('button');
   const continueLastGame = createElement('button', 'settings__continue-last-game');
+  continueLastGame.classList.add('button');
   const randomGame = createElement('button', 'settings__random-game');
+  randomGame.classList.add('button');
   const themeGame = createElement('button', 'settings__theme');
 
+  themeGame.classList.add('button');
   resetGame.innerText = 'reset';
   solutionBtn.innerText = 'solution';
   continueLastGame.innerText = 'continue last game';
@@ -70,16 +76,14 @@ const createSettingsButtons = () => {
 
     optionFormImage.value = countValue;
     countValue += 1;
-    if (countValue === 4) {
-      countValue = 0;
-    }
     optionFormImage.innerText = nameImages[i];
     selectFormImages.append(optionFormImage);
   }
   //--
 
   levelsForm.append(labelFormLevels, selectFormLevels, labelFormImages, selectFormImages);
-  settings.append(resetGame, solutionBtn, continueLastGame, randomGame, themeGame, levelsForm);
+  settings.append(settingsButtonWrapper, levelsForm);
+  settingsButtonWrapper.append(resetGame, solutionBtn, continueLastGame, randomGame, themeGame);
   return settings;
 };
 export {createSettingsButtons, selectFormLevels, selectFormImages, resetGame, solutionBtn};
