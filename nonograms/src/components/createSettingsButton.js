@@ -7,6 +7,8 @@ let selectFormLevels;
 let selectFormImages;
 let resetGame;
 let solutionBtn;
+let randomGame;
+let sound;
 const createSettingsButtons = () => {
   const settings = createElement('div', 'settings');
   const settingsButtonWrapper = createElement('div', 'settings-button-wrapper');
@@ -16,16 +18,21 @@ const createSettingsButtons = () => {
   solutionBtn.classList.add('button');
   const continueLastGame = createElement('button', 'settings__continue-last-game');
   continueLastGame.classList.add('button');
-  const randomGame = createElement('button', 'settings__random-game');
+  randomGame = createElement('button', 'settings__random-game');
   randomGame.classList.add('button');
   const themeGame = createElement('button', 'settings__theme');
-
   themeGame.classList.add('button');
+  const saveGame = createElement('button', 'settings__save');
+  saveGame.classList.add('button');
   resetGame.innerText = 'reset';
+  sound = createElement('button', 'settings__sound');
+  sound.classList.add('button');
+  sound.innerText = 'sound on';
   solutionBtn.innerText = 'solution';
   continueLastGame.innerText = 'continue last game';
   randomGame.innerText = 'random game';
   themeGame.innerText = 'theme';
+  saveGame.innerText = 'save game';
   // выбор размера игрового поля
   const levelsForm = createElement('form', 'settings__form');
   const labelFormLevels = createElement('label', 'settings__form-label');
@@ -60,7 +67,7 @@ const createSettingsButtons = () => {
     'sharp(5x5)',
     'shess(5x5)',
     'snowflake(5x5)',
-    'home(10x10)',
+    'tower(5x5)',
     'home(10x10)',
     'home(10x10)',
     'home(10x10)',
@@ -83,7 +90,7 @@ const createSettingsButtons = () => {
 
   levelsForm.append(labelFormLevels, selectFormLevels, labelFormImages, selectFormImages);
   settings.append(settingsButtonWrapper, levelsForm);
-  settingsButtonWrapper.append(resetGame, solutionBtn, continueLastGame, randomGame, themeGame);
+  settingsButtonWrapper.append(resetGame, solutionBtn, saveGame, continueLastGame, randomGame, themeGame, sound);
   return settings;
 };
-export {createSettingsButtons, selectFormLevels, selectFormImages, resetGame, solutionBtn};
+export {createSettingsButtons, selectFormLevels, selectFormImages, resetGame, solutionBtn, randomGame, sound};

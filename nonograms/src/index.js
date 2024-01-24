@@ -6,6 +6,8 @@ import {
   selectFormImages,
   resetGame,
   solutionBtn,
+  randomGame,
+  sound,
 } from './components/createSettingsButton';
 
 import data from './components/matrix';
@@ -39,12 +41,38 @@ timerTopCluesWrapper.append(timerElement, topCluesWrapper);
 timerElement.innerHTML = '00:00';
 let timer = 0;
 let timerInterval;
+let isVolume = true;
 const arrCellMatrix = []; // матрица html элементов ячеек
 const arrCellTop = []; // массив html элементов подсказок сверху
 const arrCellLeft = []; // массив html элементов подсказок слева
 const selectValueLevels = selectFormLevels.value;
 let selectValueImages = selectFormImages.value;
+const clickSound = new Audio('./assets/audio/click.wav');
+const clickSound2 = new Audio('./assets/audio/click2.mp3');
+const clickRightSound = new Audio('./assets/audio/click-right.mp3');
+const victorySound = new Audio('./assets/audio/victory.mp3');
+clickSound.volume = 0;
+clickSound2.volume = 0;
+clickRightSound.volume = 0;
+victorySound.volume = 0;
+const unmuteSound = () => {
+  if (isVolume) {
+    clickSound.volume = 0.4;
+    clickSound2.volume = 0.4;
+    clickRightSound.volume = 0.4;
+    victorySound.volume = 0.4;
+    sound.innerText = 'sound off';
+    isVolume = false;
+  } else {
+    clickSound.volume = 0;
+    clickSound2.volume = 0;
+    clickRightSound.volume = 0;
+    victorySound.volume = 0;
 
+    isVolume = true;
+    sound.innerText = 'sound on';
+  }
+};
 // -- таймер
 function startTimer() {
   timerInterval = setInterval(() => {
@@ -84,6 +112,7 @@ const resetGames = (level) => {
   for (let i = 0; i < level; i += 1) {
     for (let j = 0; j < level; j += 1) {
       arrCellMatrix[i][j].classList.remove('cell--activ');
+      arrCellMatrix[i][j].classList.remove('cell--active-cross');
       arrCellMatrix[i][j].textContent = '';
     }
   }
@@ -126,28 +155,34 @@ const game = (dataMatrix, level) => {
       playingFieldWrapper.addEventListener('click', (event) => {
         if (event.target === cell) {
           cell.classList.toggle('cell--activ');
+
           // ---  алгоритм победы
           if (matrixImage.matrix[i][j] === 1) {
             if (!isClick) {
               arrayGuessedCells.push(1);
+              clickSound.play();
               isClick = true;
             } else {
               arrayGuessedCells.pop(1);
+              clickSound2.play();
               isClick = false;
             }
           }
           if (matrixImage.matrix[i][j] === 0) {
             if (!isClickEmptyCells) {
               arrayEmptyCells.push(1);
+              clickSound.play();
               isClickEmptyCells = true;
             } else {
               arrayEmptyCells.pop(1);
+              clickSound2.play();
               isClickEmptyCells = false;
             }
           }
         }
         if (arrayFilledCells.length === arrayGuessedCells.length && arrayEmptyCells.length === 0) {
           victoryMessage.textContent = `Great! You have solved the nonogram in ${timerElement.innerHTML} seconds!`;
+          victorySound.play();
           console.log(`Great! You have solved the nonogram in ${timerElement.innerHTML} seconds!`);
           stopTimer();
         }
@@ -159,12 +194,13 @@ const game = (dataMatrix, level) => {
       cell.addEventListener('contextmenu', (event) => {
         event.preventDefault();
         if (!isRightClick) {
-          cell.textContent = 'X';
+          cell.classList.add('cell--active-cross');
           isRightClick = true;
         } else {
-          cell.textContent = '';
+          cell.classList.remove('cell--active-cross');
           isRightClick = false;
         }
+        clickRightSound.play();
       });
       //--
     }
@@ -187,15 +223,16 @@ playingFieldLeftCluesWrapper.append(playingFieldLeftWrapper, playingFieldWrapper
 //--
 
 // алгоритм отрисовки матриц и победы
-const creatingMatrices = (dataMatrix) => {
+const creatingMatrices = (dataMatrix, numberImages) => {
   const arrayFilledCells1 = [];
   const arrayGuessedCells1 = [];
   const arrayEmptyCells1 = [];
 
-  const matrixImage = dataMatrix[selectValueImages];
+  const matrixImage = dataMatrix[numberImages];
   for (let i = 0; i < 5; i += 1) {
     for (let j = 0; j < 5; j += 1) {
       arrCellMatrix[i][j].classList.remove('cell--activ');
+      arrCellMatrix[i][j].classList.remove('cell--active-cross');
       if (matrixImage.matrix[i][j] === 1) {
         arrayFilledCells1.push(1);
       }
@@ -228,6 +265,7 @@ const creatingMatrices = (dataMatrix) => {
 
         if (arrayFilledCells1.length === arrayGuessedCells1.length && arrayEmptyCells1.length === 0) {
           victoryMessage.textContent = `Great! You have solved the nonogram in ${timerElement.innerHTML} seconds!`;
+          victorySound.play();
           console.log(`Great! You have solved the nonogram in ${timerElement.innerHTML} seconds!`);
           stopTimer();
         }
@@ -238,24 +276,20 @@ const creatingMatrices = (dataMatrix) => {
 };
 
 // -- выбор картинки для игры
-const selectionPictures = (ValueImages) => {
-  let lengthCycle = 15;
-
-  if (ValueImages >= 0 && ValueImages <= 4) {
-    lengthCycle = 15;
-  } else if (ValueImages >= 5 && ValueImages <= 9) {
-    lengthCycle = 30;
-  } else if (ValueImages >= 10 && ValueImages <= 14) {
-    lengthCycle = 45;
-  }
+const selectionPictures = (valueImages) => {
   // -- изменение подсказок
-  for (let i = 0; i < lengthCycle; i += 1) {
-    arrCellTop[i].textContent = data[selectValueImages].topClues[i];
-    arrCellLeft[i].textContent = data[selectValueImages].leftClues[i];
+  for (let i = 0; i < 15; i += 1) {
+    arrCellTop[i].textContent = data[valueImages].topClues[i];
+    arrCellLeft[i].textContent = data[valueImages].leftClues[i];
   }
   //---
-  creatingMatrices(data);
+  creatingMatrices(data, valueImages);
   resetGames(selectValueLevels);
+};
+
+const getRandomNum = () => {
+  const randomNum = Math.floor(Math.random() * data.length);
+  return randomNum;
 };
 
 selectFormImages.addEventListener('change', () => {
@@ -270,5 +304,11 @@ resetGame.addEventListener('click', () => {
 solutionBtn.addEventListener('click', () => {
   showSolution(data, selectValueLevels);
 });
+randomGame.addEventListener('click', () => {
+  selectionPictures(getRandomNum());
+});
 
+sound.addEventListener('click', () => {
+  unmuteSound();
+});
 playingFieldWrapper.addEventListener('click', startTimer, {once: true});

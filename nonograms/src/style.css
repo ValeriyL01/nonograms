@@ -1,14 +1,16 @@
 :root {
-  --width-cell: 20px;
+  --width-cell: 25px;
 }
 
 body {
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #bee5ee;
+  background-color: #579fd3;
+  box-sizing: border-box;
   min-height: 100vh;
   padding: 0 20px;
+  font-family: 'Roboto Mono', monospace;
 }
 
 .container {
@@ -27,25 +29,23 @@ body {
   margin: 0 auto;
   flex-direction: column;
   align-items: flex-end;
+  padding: 15px;
+  border: 2px solid black;
 }
 .playing-field-wrapper {
   display: flex;
   max-width: calc(var(--width-cell) * 5 + 10px);
   flex-wrap: wrap;
-  border-top: 0.5px solid black;
-  border-left: 0.5px solid black;
 }
-.playing-field-wrapper10 {
-  max-width: calc(var(--width-cell) * 10 + 20px);
-}
+
 .top-clues-wrapper {
   display: flex;
   flex-wrap: wrap;
   max-width: calc(var(--width-cell) * 5 + 10px);
+  background-color: #cae3f7;
+  border-left: 2px solid black;
 }
-.top-clues-wrapper10 {
-  max-width: calc(var(--width-cell) * 10 + 20px);
-}
+
 .playing-field-left-clues-wrapper {
   display: flex;
 }
@@ -53,12 +53,16 @@ body {
   display: flex;
   flex-wrap: wrap;
   max-width: calc(var(--width-cell) * 3 + 6px);
+  background-color: #cae3f7;
+  border-right: 1px solid black;
+  justify-content: center;
 }
-.playing-field-left-wrapper10 {
-  max-width: calc(var(--width-cell) * 3 + 6px);
-}
+
 .timer-top-clues-wrapper {
   display: flex;
+  width: calc(var(--width-cell) * 8 + 16px);
+  justify-content: flex-end;
+  border-bottom: 2px solid black;
 }
 .timer {
   padding-right: 15px;
@@ -81,12 +85,16 @@ body {
   margin-bottom: 10px;
 }
 .button {
+  font-family: 'Roboto Mono', monospace;
   height: 25px;
-  background-color: #008497;
+  background-color: #579fd3;
   border: none;
   color: aliceblue;
   border-radius: 3px;
   cursor: pointer;
+}
+.button:hover {
+  background-color: #76c2f8;
 }
 .cell {
   display: flex;
@@ -96,6 +104,10 @@ body {
   height: var(--width-cell);
   border: 1px solid black;
   cursor: pointer;
+}
+
+.cell--active-cross::before {
+  content: '✖';
 }
 .cell-left {
   display: flex;
@@ -112,7 +124,11 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  margin-top: 10px;
   height: 40px;
+}
+.settings__sound {
+  width: 85px;
 }
 @media (max-width: 550px) {
   .settings-button-wrapper {
@@ -121,6 +137,6 @@ body {
   }
   .button {
     height: 25px;
-    width: 140px;
+    width: 170px;
   }
 }
