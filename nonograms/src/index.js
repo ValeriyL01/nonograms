@@ -1,3 +1,4 @@
+/* eslint-disable no-loop-func */
 import './style.css';
 import './index.html';
 import {
@@ -30,23 +31,30 @@ const playingFieldLeftCluesWrapper = createElement('div', 'playing-field-left-cl
 const playingFieldWrapper = createElement('div', 'playing-field-wrapper');
 const playingFieldLeftWrapper = createElement('div', 'playing-field-left-wrapper');
 const timerTopCluesWrapper = createElement('div', 'timer-top-clues-wrapper');
-
+const resultsWrapper = createElement('div', 'results-wrapper');
+const bestResults = createElement('h3', 'best-results');
 body.append(gameContainer);
 playingField.append(playingFieldContainer);
-gameContainer.append(playingField, createSettingsButtons(), victoryWrapper);
+gameContainer.append(playingField, createSettingsButtons(), victoryWrapper, resultsWrapper);
 victoryWrapper.append(victoryMessage);
 playingFieldContainer.append(timerElement, timerTopCluesWrapper, playingFieldLeftCluesWrapper);
 timerTopCluesWrapper.append(timerElement, topCluesWrapper);
-
-timerElement.innerHTML = '00:00';
+resultsWrapper.append(bestResults);
+timerElement.innerText = '00:00';
+bestResults.innerText = 'Best results:';
 let timer = 0;
 let timerInterval;
 let isVolume = true;
+let isTimer = true;
 const arrCellMatrix = []; // матрица html элементов ячеек
 const arrCellTop = []; // массив html элементов подсказок сверху
 const arrCellLeft = []; // массив html элементов подсказок слева
+let arrayFilledCells = [];
+let arrayGuessedCells = [];
+let arrayEmptyCells = [];
 const selectValueLevels = selectFormLevels.value;
 let selectValueImages = selectFormImages.value;
+let results;
 const clickSound = new Audio('./assets/audio/click.wav');
 const clickSound2 = new Audio('./assets/audio/click2.mp3');
 const clickRightSound = new Audio('./assets/audio/click-right.mp3');
@@ -55,6 +63,48 @@ clickSound.volume = 0;
 clickSound2.volume = 0;
 clickRightSound.volume = 0;
 victorySound.volume = 0;
+
+const sortResult = () => {
+  const times = [];
+  for (let i = 0; i < results.length; i += 1) {
+    const s = results[i].substring(results[i].indexOf(':') - 2, results[i].indexOf(':') + 3);
+    const [min, sec] = s.split(':').map(Number);
+    const totalTime = min * 60 + sec;
+    times.push(totalTime);
+  }
+
+  results.sort((a, b) => {
+    const indexA = results.indexOf(a);
+    const indexB = results.indexOf(b);
+    return times[indexA] - times[indexB];
+  });
+};
+
+const updateBestResults = (valueImages) => {
+  // Получить ранее сохраненный массив из localStorage
+  results = JSON.parse(localStorage.getItem('best results')) || [];
+
+  // Добавить текущий результат в массив
+
+  results.push(`Template ${data[valueImages].name} for ${timerElement.innerHTML}`);
+
+  // Сохранить обновленный массив в localStorage
+  localStorage.setItem('best results', JSON.stringify(results));
+  sortResult();
+  console.log(results);
+  for (let i = 0; i <= 4; i += 1) {
+    const resultElement = createElement('div', 'results-element');
+    const resultNumber = createElement('span', 'results-number');
+    const resultValue = createElement('span', 'results-value');
+    resultsWrapper.append(resultElement);
+    resultElement.append(resultNumber, resultValue);
+    resultNumber.innerText = `${i + 1}.`;
+    resultValue.innerText = results[i];
+    if (results[i] === undefined) {
+      resultValue.innerText = '-------';
+    }
+  }
+};
 const unmuteSound = () => {
   if (isVolume) {
     clickSound.volume = 0.4;
@@ -74,19 +124,24 @@ const unmuteSound = () => {
   }
 };
 // -- таймер
+let minutes = 0;
+let seconds = 0;
 function startTimer() {
   timerInterval = setInterval(() => {
     timer += 1;
-    const minutes = Math.floor(timer / 60)
+    minutes = Math.floor(timer / 60)
       .toString()
       .padStart(2, '0');
-    const seconds = (timer % 60).toString().padStart(2, '0');
+    seconds = (timer % 60).toString().padStart(2, '0');
     timerElement.innerHTML = `${minutes}:${seconds}`;
   }, 1000);
 }
 
 function stopTimer() {
   clearInterval(timerInterval);
+  minutes = 0;
+  seconds = 0;
+  timer = 0;
 }
 //-----
 
@@ -134,9 +189,8 @@ const showSolution = (dataMatrix, level) => {
     }
   }
 };
-const arrayFilledCells = [];
-const arrayGuessedCells = [];
-const arrayEmptyCells = [];
+
+let isResult = false;
 const game = (dataMatrix, level) => {
   const matrixImage = dataMatrix[0];
   for (let i = 0; i < level; i += 1) {
@@ -152,6 +206,7 @@ const game = (dataMatrix, level) => {
       arrCellMatrix[i][j] = cell;
       let isClick = false;
       let isClickEmptyCells = false;
+
       playingFieldWrapper.addEventListener('click', (event) => {
         if (event.target === cell) {
           cell.classList.toggle('cell--activ');
@@ -180,11 +235,24 @@ const game = (dataMatrix, level) => {
             }
           }
         }
-        if (arrayFilledCells.length === arrayGuessedCells.length && arrayEmptyCells.length === 0) {
+        if (
+          arrayFilledCells.length === arrayGuessedCells.length &&
+          arrayEmptyCells.length === 0 &&
+          arrayFilledCells.length !== 0 &&
+          arrayGuessedCells.length !== 0
+        ) {
           victoryMessage.textContent = `Great! You have solved the nonogram in ${timerElement.innerHTML} seconds!`;
           victorySound.play();
-          console.log(`Great! You have solved the nonogram in ${timerElement.innerHTML} seconds!`);
+
+          if (!isResult) {
+            updateBestResults(0);
+            isResult = true;
+          }
+          isResult = false;
           stopTimer();
+          arrayFilledCells = [];
+          arrayGuessedCells = [];
+          arrayEmptyCells = [];
         }
         //-------
       });
@@ -223,12 +291,14 @@ playingFieldLeftCluesWrapper.append(playingFieldLeftWrapper, playingFieldWrapper
 //--
 
 // алгоритм отрисовки матриц и победы
+let isRes = false;
 const creatingMatrices = (dataMatrix, numberImages) => {
-  const arrayFilledCells1 = [];
-  const arrayGuessedCells1 = [];
-  const arrayEmptyCells1 = [];
+  let arrayFilledCells1 = [];
+  let arrayGuessedCells1 = [];
+  let arrayEmptyCells1 = [];
 
   const matrixImage = dataMatrix[numberImages];
+
   for (let i = 0; i < 5; i += 1) {
     for (let j = 0; j < 5; j += 1) {
       arrCellMatrix[i][j].classList.remove('cell--activ');
@@ -263,11 +333,25 @@ const creatingMatrices = (dataMatrix, numberImages) => {
           }
         }
 
-        if (arrayFilledCells1.length === arrayGuessedCells1.length && arrayEmptyCells1.length === 0) {
+        if (
+          arrayFilledCells1.length === arrayGuessedCells1.length &&
+          arrayEmptyCells1.length === 0 &&
+          arrayFilledCells1.length !== 0 &&
+          arrayGuessedCells1.length !== 0
+        ) {
           victoryMessage.textContent = `Great! You have solved the nonogram in ${timerElement.innerHTML} seconds!`;
           victorySound.play();
-          console.log(`Great! You have solved the nonogram in ${timerElement.innerHTML} seconds!`);
+          console.log(numberImages);
           stopTimer();
+          if (!isRes) {
+            updateBestResults(numberImages);
+
+            isRes = true;
+          }
+          isRes = false;
+          arrayFilledCells1 = [];
+          arrayGuessedCells1 = [];
+          arrayEmptyCells1 = [];
         }
         //-------
       });
@@ -283,22 +367,31 @@ const selectionPictures = (valueImages) => {
     arrCellLeft[i].textContent = data[valueImages].leftClues[i];
   }
   //---
+
   creatingMatrices(data, valueImages);
   resetGames(selectValueLevels);
 };
 
 const getRandomNum = () => {
   const randomNum = Math.floor(Math.random() * data.length);
+  selectValueImages = randomNum;
   return randomNum;
 };
 
 selectFormImages.addEventListener('change', () => {
   selectValueImages = selectFormImages.value;
   selectionPictures(selectValueImages);
+  playingFieldWrapper.addEventListener('click', startTimer, {once: isTimer}, () => {
+    isTimer = false;
+  });
 });
 
 resetGame.addEventListener('click', () => {
   resetGames(selectValueLevels);
+  isTimer = true;
+  playingFieldWrapper.addEventListener('click', startTimer, {once: isTimer}, () => {
+    isTimer = false;
+  });
 });
 
 solutionBtn.addEventListener('click', () => {
@@ -306,9 +399,15 @@ solutionBtn.addEventListener('click', () => {
 });
 randomGame.addEventListener('click', () => {
   selectionPictures(getRandomNum());
+  playingFieldWrapper.addEventListener('click', startTimer, {once: isTimer}, () => {
+    isTimer = false;
+  });
 });
 
 sound.addEventListener('click', () => {
   unmuteSound();
 });
-playingFieldWrapper.addEventListener('click', startTimer, {once: true});
+
+playingFieldWrapper.addEventListener('click', startTimer, {once: isTimer}, () => {
+  isTimer = false;
+});

@@ -9,6 +9,7 @@ let resetGame;
 let solutionBtn;
 let randomGame;
 let sound;
+let optionFormImage;
 const createSettingsButtons = () => {
   const settings = createElement('div', 'settings');
   const settingsButtonWrapper = createElement('div', 'settings-button-wrapper');
@@ -55,7 +56,7 @@ const createSettingsButtons = () => {
   // выбор картинки для игры
   const labelFormImages = createElement('label', 'settings__form-label');
   selectFormImages = createElement('select', 'settings__form-select');
-  let optionFormImage;
+
   labelFormImages.setAttribute('for', 'images');
   selectFormImages.setAttribute('name', 'images');
   labelFormImages.innerText = 'templates';
@@ -68,7 +69,7 @@ const createSettingsButtons = () => {
     'shess(5x5)',
     'snowflake(5x5)',
     'tower(5x5)',
-    'home(10x10)',
+    'window(5x5)',
     'home(10x10)',
     'home(10x10)',
     'home(10x10)',
@@ -93,4 +94,13 @@ const createSettingsButtons = () => {
   settingsButtonWrapper.append(resetGame, solutionBtn, saveGame, continueLastGame, randomGame, themeGame, sound);
   return settings;
 };
-export {createSettingsButtons, selectFormLevels, selectFormImages, resetGame, solutionBtn, randomGame, sound};
+export {
+  createSettingsButtons,
+  selectFormLevels,
+  selectFormImages,
+  resetGame,
+  solutionBtn,
+  randomGame,
+  sound,
+  optionFormImage,
+};
