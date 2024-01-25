@@ -80,18 +80,11 @@ const sortResult = () => {
   });
 };
 
-const updateBestResults = (valueImages) => {
-  // Получить ранее сохраненный массив из localStorage
-  results = JSON.parse(localStorage.getItem('best results')) || [];
+const arrResultElements = [];
+const arrResultNumber = [];
+const arrResultValue = [];
 
-  // Добавить текущий результат в массив
-
-  results.push(`Template ${data[valueImages].name} for ${timerElement.innerHTML}`);
-
-  // Сохранить обновленный массив в localStorage
-  localStorage.setItem('best results', JSON.stringify(results));
-  sortResult();
-  console.log(results);
+const createResultsElements = () => {
   for (let i = 0; i <= 4; i += 1) {
     const resultElement = createElement('div', 'results-element');
     const resultNumber = createElement('span', 'results-number');
@@ -102,6 +95,34 @@ const updateBestResults = (valueImages) => {
     resultValue.innerText = results[i];
     if (results[i] === undefined) {
       resultValue.innerText = '-------';
+    }
+    arrResultElements.push(resultElement);
+    arrResultNumber.push(resultNumber);
+    arrResultValue.push(resultValue);
+  }
+};
+window.addEventListener('load', () => {
+  results = JSON.parse(localStorage.getItem('best results')) || [];
+  createResultsElements();
+  console.log(results);
+});
+
+const updateBestResults = (valueImages) => {
+  // Получить ранее сохраненный массив из localStorage
+  results = JSON.parse(localStorage.getItem('best results')) || [];
+
+  // Добавить текущий результат в массив
+  results.push(`Template ${data[valueImages].name} for ${timerElement.innerHTML}`);
+
+  // Сохранить обновленный массив в localStorage
+  localStorage.setItem('best results', JSON.stringify(results));
+  sortResult();
+  console.log(results);
+  for (let i = 0; i <= 4; i += 1) {
+    arrResultNumber[i].innerText = `${i + 1}.`;
+    arrResultValue[i].innerText = results[i];
+    if (results[i] === undefined) {
+      arrResultValue[i].innerText = '-------';
     }
   }
 };
