@@ -1,5 +1,7 @@
 /* eslint-disable no-loop-func */
+
 import './style.css';
+
 import './index.html';
 import {
   createSettingsButtons,
@@ -9,6 +11,8 @@ import {
   solutionBtn,
   randomGame,
   sound,
+  saveGame,
+  continueLastGame,
 } from './components/createSettingsButton';
 
 import data from './components/matrix';
@@ -52,6 +56,7 @@ const arrCellLeft = []; // массив html элементов подсказо
 let arrayFilledCells = [];
 let arrayGuessedCells = [];
 let arrayEmptyCells = [];
+let arrClicks = [];
 const selectValueLevels = selectFormLevels.value;
 let selectValueImages = selectFormImages.value;
 let results;
@@ -94,7 +99,7 @@ const createResultsElements = () => {
     resultNumber.innerText = `${i + 1}.`;
     resultValue.innerText = results[i];
     if (results[i] === undefined) {
-      resultValue.innerText = '-------';
+      resultValue.innerText = '-------------------------------';
     }
     arrResultElements.push(resultElement);
     arrResultNumber.push(resultNumber);
@@ -104,9 +109,18 @@ const createResultsElements = () => {
 window.addEventListener('load', () => {
   results = JSON.parse(localStorage.getItem('best results')) || [];
   createResultsElements();
-  console.log(results);
 });
-
+const saveGameLocalStorage = () => {
+  localStorage.setItem('game', JSON.stringify(selectValueImages));
+  localStorage.setItem('clicks', JSON.stringify(arrClicks));
+};
+const checkingСlicks = () => {
+  const clicks = JSON.parse(localStorage.getItem('clicks'));
+  if (clicks !== null && clicks.length > 0) {
+    continueLastGame.disabled = false;
+  }
+};
+checkingСlicks();
 const updateBestResults = (valueImages) => {
   // Получить ранее сохраненный массив из localStorage
   results = JSON.parse(localStorage.getItem('best results')) || [];
@@ -117,12 +131,12 @@ const updateBestResults = (valueImages) => {
   // Сохранить обновленный массив в localStorage
   localStorage.setItem('best results', JSON.stringify(results));
   sortResult();
-  console.log(results);
+
   for (let i = 0; i <= 4; i += 1) {
     arrResultNumber[i].innerText = `${i + 1}.`;
     arrResultValue[i].innerText = results[i];
     if (results[i] === undefined) {
-      arrResultValue[i].innerText = '-------';
+      arrResultValue[i].innerText = '-------------------------------';
     }
   }
 };
@@ -231,6 +245,7 @@ const game = (dataMatrix, level) => {
       playingFieldWrapper.addEventListener('click', (event) => {
         if (event.target === cell) {
           cell.classList.toggle('cell--activ');
+          arrClicks.push([i, j]);
 
           // ---  алгоритм победы
           if (matrixImage.matrix[i][j] === 1) {
@@ -362,7 +377,7 @@ const creatingMatrices = (dataMatrix, numberImages) => {
         ) {
           victoryMessage.textContent = `Great! You have solved the nonogram in ${timerElement.innerHTML} seconds!`;
           victorySound.play();
-          console.log(numberImages);
+
           stopTimer();
           if (!isRes) {
             updateBestResults(numberImages);
@@ -392,7 +407,15 @@ const selectionPictures = (valueImages) => {
   creatingMatrices(data, valueImages);
   resetGames(selectValueLevels);
 };
+const loadSavedGame = () => {
+  selectValueImages = JSON.parse(localStorage.getItem('game'));
+  console.log(selectValueImages);
+  selectionPictures(selectValueImages);
 
+  for (const click of JSON.parse(localStorage.getItem('clicks'))) {
+    arrCellMatrix[click[0]][click[1]].classList.add('cell--activ');
+  }
+};
 const getRandomNum = () => {
   const randomNum = Math.floor(Math.random() * data.length);
   selectValueImages = randomNum;
@@ -418,6 +441,7 @@ resetGame.addEventListener('click', () => {
 solutionBtn.addEventListener('click', () => {
   showSolution(data, selectValueLevels);
 });
+
 randomGame.addEventListener('click', () => {
   selectionPictures(getRandomNum());
   playingFieldWrapper.addEventListener('click', startTimer, {once: isTimer}, () => {
@@ -431,4 +455,15 @@ sound.addEventListener('click', () => {
 
 playingFieldWrapper.addEventListener('click', startTimer, {once: isTimer}, () => {
   isTimer = false;
+});
+
+saveGame.addEventListener('click', () => {
+  continueLastGame.disabled = false;
+  localStorage.removeItem('clicks');
+  saveGameLocalStorage();
+  arrClicks = [];
+});
+
+continueLastGame.addEventListener('click', () => {
+  loadSavedGame();
 });

@@ -10,6 +10,8 @@ let solutionBtn;
 let randomGame;
 let sound;
 let optionFormImage;
+let saveGame;
+let continueLastGame;
 const createSettingsButtons = () => {
   const settings = createElement('div', 'settings');
   const settingsButtonWrapper = createElement('div', 'settings-button-wrapper');
@@ -17,13 +19,13 @@ const createSettingsButtons = () => {
   resetGame.classList.add('button');
   solutionBtn = createElement('button', 'settings__solution');
   solutionBtn.classList.add('button');
-  const continueLastGame = createElement('button', 'settings__continue-last-game');
+  continueLastGame = createElement('button', 'settings__continue-last-game');
   continueLastGame.classList.add('button');
   randomGame = createElement('button', 'settings__random-game');
   randomGame.classList.add('button');
   const themeGame = createElement('button', 'settings__theme');
   themeGame.classList.add('button');
-  const saveGame = createElement('button', 'settings__save');
+  saveGame = createElement('button', 'settings__save');
   saveGame.classList.add('button');
   resetGame.innerText = 'reset';
   sound = createElement('button', 'settings__sound');
@@ -31,6 +33,7 @@ const createSettingsButtons = () => {
   sound.innerText = 'sound on';
   solutionBtn.innerText = 'solution';
   continueLastGame.innerText = 'continue last game';
+  continueLastGame.setAttribute('disabled', 'true');
   randomGame.innerText = 'random game';
   themeGame.innerText = 'theme';
   saveGame.innerText = 'save game';
@@ -103,4 +106,6 @@ export {
   randomGame,
   sound,
   optionFormImage,
+  saveGame,
+  continueLastGame,
 };
