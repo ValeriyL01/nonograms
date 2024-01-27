@@ -1,5 +1,4 @@
 /* eslint-disable no-loop-func */
-
 import './style.css';
 
 import './index.html';
@@ -66,11 +65,12 @@ const clickSound = new Audio('./assets/audio/click.wav');
 const clickSound2 = new Audio('./assets/audio/click2.mp3');
 const clickRightSound = new Audio('./assets/audio/click-right.mp3');
 const victorySound = new Audio('./assets/audio/victory.mp3');
+const clickSettingsSound = new Audio('./assets/audio/click-settings.mp3');
 clickSound.volume = 0;
 clickSound2.volume = 0;
 clickRightSound.volume = 0;
 victorySound.volume = 0;
-
+clickSettingsSound.volume = 0;
 const sortResult = () => {
   const times = [];
   for (let i = 0; i < results.length; i += 1) {
@@ -101,7 +101,7 @@ const createResultsElements = () => {
     resultNumber.innerText = `${i + 1}.`;
     resultValue.innerText = results[i];
     if (results[i] === undefined) {
-      resultValue.innerText = '-------------------------------';
+      resultValue.innerText = '--------------------------------------';
     }
     arrResultElements.push(resultElement);
     arrResultNumber.push(resultNumber);
@@ -128,7 +128,7 @@ const updateBestResults = (valueImages) => {
   results = JSON.parse(localStorage.getItem('best results')) || [];
 
   // Добавить текущий результат в массив
-  results.push(`Template ${data[valueImages].name} for ${timerElement.innerHTML}`);
+  results.push(`Template ${data[valueImages].name} in ${timerElement.innerHTML} seconds.`);
 
   // Сохранить обновленный массив в localStorage
   localStorage.setItem('best results', JSON.stringify(results));
@@ -138,7 +138,7 @@ const updateBestResults = (valueImages) => {
     arrResultNumber[i].innerText = `${i + 1}.`;
     arrResultValue[i].innerText = results[i];
     if (results[i] === undefined) {
-      arrResultValue[i].innerText = '-------------------------------';
+      arrResultValue[i].innerText = '--------------------------------------';
     }
   }
 };
@@ -148,6 +148,7 @@ const unmuteSound = () => {
     clickSound2.volume = 0.4;
     clickRightSound.volume = 0.4;
     victorySound.volume = 0.4;
+    clickSettingsSound.volume = 0.4;
     sound.innerText = 'sound off';
     isVolume = false;
   } else {
@@ -155,7 +156,7 @@ const unmuteSound = () => {
     clickSound2.volume = 0;
     clickRightSound.volume = 0;
     victorySound.volume = 0;
-
+    clickSettingsSound.volume = 0;
     isVolume = true;
     sound.innerText = 'sound on';
   }
@@ -248,27 +249,30 @@ const game = (dataMatrix, level) => {
         if (event.target === cell) {
           cell.classList.toggle('cell--activ');
           arrClicks.push([i, j]);
+          if (cell.classList.contains('cell--activ')) {
+            clickSound.play();
+          } else {
+            clickSound2.play();
+          }
 
           // ---  алгоритм победы
           if (matrixImage.matrix[i][j] === 1) {
             if (!isClick) {
               arrayGuessedCells.push(1);
-              clickSound.play();
               isClick = true;
             } else {
               arrayGuessedCells.pop(1);
-              clickSound2.play();
               isClick = false;
             }
           }
           if (matrixImage.matrix[i][j] === 0) {
             if (!isClickEmptyCells) {
               arrayEmptyCells.push(1);
-              clickSound.play();
+
               isClickEmptyCells = true;
             } else {
               arrayEmptyCells.pop(1);
-              clickSound2.play();
+
               isClickEmptyCells = false;
             }
           }
@@ -437,6 +441,7 @@ selectFormImages.addEventListener('change', () => {
   playingFieldWrapper.addEventListener('click', startTimer, {once: isTimer}, () => {
     isTimer = false;
   });
+  clickSettingsSound.play();
 });
 
 resetGame.addEventListener('click', () => {
@@ -445,10 +450,12 @@ resetGame.addEventListener('click', () => {
   playingFieldWrapper.addEventListener('click', startTimer, {once: isTimer}, () => {
     isTimer = false;
   });
+  clickSettingsSound.play();
 });
 
 solutionBtn.addEventListener('click', () => {
   showSolution(data, selectValueLevels);
+  clickSettingsSound.play();
 });
 
 randomGame.addEventListener('click', () => {
@@ -456,10 +463,12 @@ randomGame.addEventListener('click', () => {
   playingFieldWrapper.addEventListener('click', startTimer, {once: isTimer}, () => {
     isTimer = false;
   });
+  clickSettingsSound.play();
 });
 
 sound.addEventListener('click', () => {
   unmuteSound();
+  clickSettingsSound.play();
 });
 
 playingFieldWrapper.addEventListener('click', startTimer, {once: isTimer}, () => {
@@ -471,12 +480,15 @@ saveGame.addEventListener('click', () => {
   localStorage.removeItem('clicks');
   saveGameLocalStorage();
   arrClicks = [];
+  clickSettingsSound.play();
 });
 
 continueLastGame.addEventListener('click', () => {
+  clickSettingsSound.play();
   loadSavedGame();
 });
 
 themeGame.addEventListener('click', () => {
+  clickSettingsSound.play();
   changeTheme();
 });
