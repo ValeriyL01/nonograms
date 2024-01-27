@@ -12,6 +12,7 @@ let sound;
 let optionFormImage;
 let saveGame;
 let continueLastGame;
+let themeGame;
 const createSettingsButtons = () => {
   const settings = createElement('div', 'settings');
   const settingsButtonWrapper = createElement('div', 'settings-button-wrapper');
@@ -23,7 +24,7 @@ const createSettingsButtons = () => {
   continueLastGame.classList.add('button');
   randomGame = createElement('button', 'settings__random-game');
   randomGame.classList.add('button');
-  const themeGame = createElement('button', 'settings__theme');
+  themeGame = createElement('button', 'settings__theme');
   themeGame.classList.add('button');
   saveGame = createElement('button', 'settings__save');
   saveGame.classList.add('button');
@@ -35,7 +36,7 @@ const createSettingsButtons = () => {
   continueLastGame.innerText = 'continue last game';
   continueLastGame.setAttribute('disabled', 'true');
   randomGame.innerText = 'random game';
-  themeGame.innerText = 'theme';
+  themeGame.innerText = 'dark theme  ';
   saveGame.innerText = 'save game';
   // выбор размера игрового поля
   const levelsForm = createElement('form', 'settings__form');
@@ -108,4 +109,5 @@ export {
   optionFormImage,
   saveGame,
   continueLastGame,
+  themeGame,
 };

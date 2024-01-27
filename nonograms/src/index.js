@@ -13,10 +13,12 @@ import {
   sound,
   saveGame,
   continueLastGame,
+  themeGame,
 } from './components/createSettingsButton';
 
 import data from './components/matrix';
 
+const html = document.querySelector('html');
 const createElement = (tag, className) => {
   const element = document.createElement(tag);
   element.classList.add(className);
@@ -409,11 +411,18 @@ const selectionPictures = (valueImages) => {
 };
 const loadSavedGame = () => {
   selectValueImages = JSON.parse(localStorage.getItem('game'));
-  console.log(selectValueImages);
   selectionPictures(selectValueImages);
-
   for (const click of JSON.parse(localStorage.getItem('clicks'))) {
     arrCellMatrix[click[0]][click[1]].classList.add('cell--activ');
+  }
+};
+const changeTheme = () => {
+  if (html.classList.contains('theme')) {
+    html.classList.remove('theme');
+    themeGame.innerText = 'dark theme';
+  } else {
+    html.classList.add('theme');
+    themeGame.innerText = 'light theme';
   }
 };
 const getRandomNum = () => {
@@ -466,4 +475,8 @@ saveGame.addEventListener('click', () => {
 
 continueLastGame.addEventListener('click', () => {
   loadSavedGame();
+});
+
+themeGame.addEventListener('click', () => {
+  changeTheme();
 });
