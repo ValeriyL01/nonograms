@@ -74,9 +74,8 @@ const createSettingsButtons = () => {
     'snowflake(5x5)',
     'tower(5x5)',
     'window(5x5)',
-    'home(10x10)',
   ];
-  for (let i = 0; i <= 14; i += 1) {
+  for (let i = 0; i < nameImages.length; i += 1) {
     optionFormImage = createElement('option', 'settings__form-option');
 
     optionFormImage.value = countValue;

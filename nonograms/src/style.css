@@ -1,5 +1,5 @@
 :root {
-  --width-cell: 25px;
+  --width-cell: 30px;
 }
 
 :root {
@@ -32,7 +32,7 @@ body {
   min-height: 100vh;
   padding: 0 20px;
   font-family: 'Roboto Mono', monospace;
-  font-size: 18px;
+  font-size: 20px;
 }
 
 .container {
@@ -89,8 +89,8 @@ body {
   border-bottom: 2px solid black;
 }
 .timer {
-  padding-right: 15px;
-  padding-top: 25px;
+  padding-right: 20px;
+  padding-top: 35px;
 }
 .settings {
   display: flex;
@@ -107,7 +107,7 @@ body {
   font-family: 'Roboto Mono', monospace;
   background-color: var(--container-color);
   color: var(--color-text-settings);
-  font-size: 14px;
+  font-size: 15px;
   cursor: pointer;
 }
 .settings-button-wrapper {
@@ -117,14 +117,14 @@ body {
   margin-bottom: 10px;
 }
 .settings__theme {
-  width: 100px;
+  width: 110px;
 }
 .button {
   position: relative;
   font-family: 'Roboto Mono', monospace;
   height: 25px;
   background-color: var(--button-color);
-
+  font-size: 14px;
   color: aliceblue;
   border-radius: 3px;
   cursor: pointer;
@@ -145,6 +145,7 @@ body {
   height: var(--width-cell);
   border: 1px solid black;
   cursor: pointer;
+  transition: 0.2s;
 }
 
 .cell--active-cross::before {
@@ -159,7 +160,10 @@ body {
   border: 1px solid black;
 }
 .cell--activ {
+  transition: 0.2s;
   background-color: black;
+
+  transform: rotateY(180deg);
 }
 .victory-wrapper {
   display: flex;
@@ -175,6 +179,7 @@ body {
 .best-results {
   margin-top: 10px;
   margin-bottom: 5px;
+  font-size: 20px;
 }
 .results-wrapper {
   color: var(--color-text-results);
@@ -185,20 +190,46 @@ body {
   border-color: var(--results-element-border-color);
 
   padding: 5px;
-  font-size: 15px;
+  font-size: 17px;
 }
 .victory-message {
   color: var(--color-text-results);
   text-align: center;
+  font-size: 22px;
+}
+.victory-message--open {
+  color: transparent;
+  background-clip: text;
+  background-size: 400%;
+  animation: victory 4s infinite;
+  background-image: linear-gradient(
+    60.4deg,
+    rgba(87, 159, 211, 1) 13.2%,
+    rgb(0, 0, 0) 48.9%,
+    rgb(255, 254, 255) 86.4%,
+    rgba(26, 90, 135, 1) 29.8%,
+    rgb(0, 0, 0) 13.9%,
+    rgb(87, 159, 211) 86.4%
+  );
 }
 
+@keyframes victory {
+  0%,
+  100% {
+    background-position: 200% 0%;
+  }
+
+  50% {
+    background-position: 0% 200%;
+  }
+}
 .selected-template {
   text-align: center;
   align-items: center;
   margin: 0 auto;
   color: var(--color-text-results);
 }
-@media (max-width: 800px) {
+@media (max-width: 850px) {
   .settings-button-wrapper {
     flex-direction: column;
     align-items: center;
@@ -206,5 +237,10 @@ body {
   .button {
     height: 25px;
     width: 170px;
+  }
+}
+@media (max-width: 768px) {
+  .results-element {
+    font-size: 15px;
   }
 }
