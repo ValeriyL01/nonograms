@@ -26,8 +26,8 @@ const createElement = (tag, className) => {
 const body = document.querySelector('body');
 const gameContainer = createElement('div', 'container');
 const victoryWrapper = createElement('div', 'victory-wrapper');
-const victoryMessage = createElement('span', 'victory-message');
-
+const victoryMessage = createElement('h3', 'victory-message');
+const selectedTemplate = createElement('div', 'selected-template');
 const playingField = createElement('div', 'playing-field');
 const playingFieldContainer = createElement('div', 'playing-field-container');
 const topCluesWrapper = createElement('div', 'top-clues-wrapper');
@@ -40,21 +40,23 @@ const resultsWrapper = createElement('div', 'results-wrapper');
 const bestResults = createElement('h3', 'best-results');
 body.append(gameContainer);
 playingField.append(playingFieldContainer);
-gameContainer.append(playingField, createSettingsButtons(), victoryWrapper, resultsWrapper);
+gameContainer.append(playingField, selectedTemplate, createSettingsButtons(), victoryWrapper, resultsWrapper);
 victoryWrapper.append(victoryMessage);
 playingFieldContainer.append(timerElement, timerTopCluesWrapper, playingFieldLeftCluesWrapper);
 timerTopCluesWrapper.append(timerElement, topCluesWrapper);
 resultsWrapper.append(bestResults);
 timerElement.innerText = '00:00';
 bestResults.innerText = 'Best results:';
+selectedTemplate.innerText = 'snake(5x5)';
 let timer = 0;
 let timerInterval;
 let isVolume = true;
 let isTimer = true;
+let isSaveGame = false;
 const arrCellMatrix = []; // матрица html элементов ячеек
 const arrCellTop = []; // массив html элементов подсказок сверху
 const arrCellLeft = []; // массив html элементов подсказок слева
-let arrayFilledCells = [];
+
 let arrayGuessedCells = [];
 let arrayEmptyCells = [];
 let arrClicks = [];
@@ -73,6 +75,7 @@ victorySound.volume = 0;
 clickSettingsSound.volume = 0;
 const sortResult = () => {
   const times = [];
+
   for (let i = 0; i < results.length; i += 1) {
     const s = results[i].substring(results[i].indexOf(':') - 2, results[i].indexOf(':') + 3);
     const [min, sec] = s.split(':').map(Number);
@@ -115,6 +118,8 @@ window.addEventListener('load', () => {
 const saveGameLocalStorage = () => {
   localStorage.setItem('game', JSON.stringify(selectValueImages));
   localStorage.setItem('clicks', JSON.stringify(arrClicks));
+  localStorage.setItem('arrayGuessedCells', JSON.stringify(arrayGuessedCells));
+  localStorage.setItem('arrayEmptyCells', JSON.stringify(arrayEmptyCells));
 };
 const checkingСlicks = () => {
   const clicks = JSON.parse(localStorage.getItem('clicks'));
@@ -131,8 +136,8 @@ const updateBestResults = (valueImages) => {
   results.push(`Template ${data[valueImages].name} in ${timerElement.innerHTML} seconds.`);
 
   // Сохранить обновленный массив в localStorage
-  localStorage.setItem('best results', JSON.stringify(results));
   sortResult();
+  localStorage.setItem('best results', JSON.stringify(results));
 
   for (let i = 0; i <= 4; i += 1) {
     arrResultNumber[i].innerText = `${i + 1}.`;
@@ -238,21 +243,21 @@ const game = (dataMatrix, level) => {
 
       cell.textContent = '';
       playingFieldWrapper.append(cell);
-      if (matrixImage.matrix[i][j] === 1) {
-        arrayFilledCells.push(1);
-      }
       arrCellMatrix[i][j] = cell;
       let isClick = false;
       let isClickEmptyCells = false;
 
       playingFieldWrapper.addEventListener('click', (event) => {
+        isSaveGame = true;
         if (event.target === cell) {
           cell.classList.toggle('cell--activ');
-          arrClicks.push([i, j]);
+
           if (cell.classList.contains('cell--activ')) {
             clickSound.play();
+            arrClicks.push([i, j]);
           } else {
             clickSound2.play();
+            arrClicks.pop([i, j]);
           }
 
           // ---  алгоритм победы
@@ -278,21 +283,21 @@ const game = (dataMatrix, level) => {
           }
         }
         if (
-          arrayFilledCells.length === arrayGuessedCells.length &&
+          matrixImage.units === arrayGuessedCells.length &&
           arrayEmptyCells.length === 0 &&
-          arrayFilledCells.length !== 0 &&
+          matrixImage.units !== 0 &&
           arrayGuessedCells.length !== 0
         ) {
           victoryMessage.textContent = `Great! You have solved the nonogram in ${timerElement.innerHTML} seconds!`;
+          victoryMessage.classList.add('victory-message--open');
           victorySound.play();
-
+          arrClicks = [];
           if (!isResult) {
             updateBestResults(0);
             isResult = true;
           }
           isResult = false;
           stopTimer();
-          arrayFilledCells = [];
           arrayGuessedCells = [];
           arrayEmptyCells = [];
         }
@@ -335,7 +340,6 @@ playingFieldLeftCluesWrapper.append(playingFieldLeftWrapper, playingFieldWrapper
 // алгоритм отрисовки матриц и победы
 let isRes = false;
 const creatingMatrices = (dataMatrix, numberImages) => {
-  let arrayFilledCells1 = [];
   let arrayGuessedCells1 = [];
   let arrayEmptyCells1 = [];
 
@@ -345,13 +349,12 @@ const creatingMatrices = (dataMatrix, numberImages) => {
     for (let j = 0; j < 5; j += 1) {
       arrCellMatrix[i][j].classList.remove('cell--activ');
       arrCellMatrix[i][j].classList.remove('cell--active-cross');
-      if (matrixImage.matrix[i][j] === 1) {
-        arrayFilledCells1.push(1);
-      }
+
       //  arrCellMatrix[i][j].textContent = matrixImage.matrix[i][j];
       let isClick = false;
       let isClickEmptyCells = false;
       playingFieldWrapper.addEventListener('click', (event) => {
+        isSaveGame = true;
         if (event.target === arrCellMatrix[i][j]) {
           // ---  алгоритм победы
           if (matrixImage.matrix[i][j] === 1) {
@@ -376,14 +379,15 @@ const creatingMatrices = (dataMatrix, numberImages) => {
         }
 
         if (
-          arrayFilledCells1.length === arrayGuessedCells1.length &&
+          matrixImage.units === arrayGuessedCells1.length &&
           arrayEmptyCells1.length === 0 &&
-          arrayFilledCells1.length !== 0 &&
+          matrixImage.units !== 0 &&
           arrayGuessedCells1.length !== 0
         ) {
           victoryMessage.textContent = `Great! You have solved the nonogram in ${timerElement.innerHTML} seconds!`;
           victorySound.play();
-
+          victoryMessage.classList.add('victory-message--open');
+          arrClicks = [];
           stopTimer();
           if (!isRes) {
             updateBestResults(numberImages);
@@ -391,7 +395,7 @@ const creatingMatrices = (dataMatrix, numberImages) => {
             isRes = true;
           }
           isRes = false;
-          arrayFilledCells1 = [];
+
           arrayGuessedCells1 = [];
           arrayEmptyCells1 = [];
         }
@@ -409,7 +413,7 @@ const selectionPictures = (valueImages) => {
     arrCellLeft[i].textContent = data[valueImages].leftClues[i];
   }
   //---
-
+  selectedTemplate.innerText = data[valueImages].name; // название шаблона
   creatingMatrices(data, valueImages);
   resetGames(selectValueLevels);
 };
@@ -419,6 +423,8 @@ const loadSavedGame = () => {
   for (const click of JSON.parse(localStorage.getItem('clicks'))) {
     arrCellMatrix[click[0]][click[1]].classList.add('cell--activ');
   }
+  arrayGuessedCells = JSON.parse(localStorage.getItem('arrayGuessedCells'));
+  arrayEmptyCells = JSON.parse(localStorage.getItem('arrayEmptyCells'));
 };
 const changeTheme = () => {
   if (html.classList.contains('theme')) {
@@ -441,6 +447,7 @@ selectFormImages.addEventListener('change', () => {
   playingFieldWrapper.addEventListener('click', startTimer, {once: isTimer}, () => {
     isTimer = false;
   });
+  arrClicks = [];
   clickSettingsSound.play();
 });
 
@@ -464,6 +471,7 @@ randomGame.addEventListener('click', () => {
     isTimer = false;
   });
   clickSettingsSound.play();
+  arrClicks = [];
 });
 
 sound.addEventListener('click', () => {
@@ -476,11 +484,16 @@ playingFieldWrapper.addEventListener('click', startTimer, {once: isTimer}, () =>
 });
 
 saveGame.addEventListener('click', () => {
-  continueLastGame.disabled = false;
-  localStorage.removeItem('clicks');
-  saveGameLocalStorage();
-  arrClicks = [];
-  clickSettingsSound.play();
+  if (isSaveGame) {
+    continueLastGame.disabled = false;
+    localStorage.removeItem('clicks');
+    saveGameLocalStorage();
+    arrClicks = [];
+    arrayGuessedCells = [];
+    arrayEmptyCells = [];
+    clickSettingsSound.play();
+    isSaveGame = false;
+  }
 });
 
 continueLastGame.addEventListener('click', () => {

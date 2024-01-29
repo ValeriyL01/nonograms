@@ -21,7 +21,7 @@
   --color-text-results: aliceblue;
   --color-text-settings: aliceblue;
   --results-element-border-color: #6d6d6e;
-  --button-color: #1a5a87;
+  --button-color: rgb(26, 90, 135);
 }
 body {
   display: flex;
@@ -190,6 +190,13 @@ body {
 .victory-message {
   color: var(--color-text-results);
   text-align: center;
+}
+
+.selected-template {
+  text-align: center;
+  align-items: center;
+  margin: 0 auto;
+  color: var(--color-text-results);
 }
 @media (max-width: 800px) {
   .settings-button-wrapper {
