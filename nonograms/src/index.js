@@ -45,34 +45,40 @@ victoryWrapper.append(victoryMessage);
 playingFieldContainer.append(timerElement, timerTopCluesWrapper, playingFieldLeftCluesWrapper);
 timerTopCluesWrapper.append(timerElement, topCluesWrapper);
 resultsWrapper.append(bestResults);
-timerElement.innerText = '00:00';
-bestResults.innerText = 'Best results:';
-selectedTemplate.innerText = 'snake(5x5)';
+
 let timer = 0;
+let minutes = 0;
+let seconds = 0;
 let timerInterval;
 let isVolume = true;
 let isTimer = true;
 let isSaveGame = false;
+let isResult = false;
 const arrCellMatrix = []; // матрица html элементов ячеек
 const arrCellTop = []; // массив html элементов подсказок сверху
 const arrCellLeft = []; // массив html элементов подсказок слева
-
 let arrayGuessedCells = [];
 let arrayEmptyCells = [];
 let arrClicks = [];
+const arrResultElements = [];
+const arrResultNumber = [];
+const arrResultValue = [];
 const selectValueLevels = selectFormLevels.value;
 let selectValueImages = selectFormImages.value;
+console.log(selectValueLevels);
 let results;
+timerElement.innerText = '00:00';
+bestResults.innerText = 'Best results:';
+selectedTemplate.innerText = 'snake(5x5)';
 const clickSound = new Audio('./assets/audio/click.wav');
 const clickSound2 = new Audio('./assets/audio/click2.mp3');
 const clickRightSound = new Audio('./assets/audio/click-right.mp3');
 const victorySound = new Audio('./assets/audio/victory.mp3');
 const clickSettingsSound = new Audio('./assets/audio/click-settings.mp3');
-clickSound.volume = 0;
-clickSound2.volume = 0;
-clickRightSound.volume = 0;
-victorySound.volume = 0;
-clickSettingsSound.volume = 0;
+const sounds = [clickSound, clickSound2, clickRightSound, victorySound, clickSettingsSound];
+
+sounds.forEach((sound) => (sound.volume = 0));
+
 const sortResult = () => {
   const times = [];
 
@@ -89,10 +95,6 @@ const sortResult = () => {
     return times[indexA] - times[indexB];
   });
 };
-
-const arrResultElements = [];
-const arrResultNumber = [];
-const arrResultValue = [];
 
 const createResultsElements = () => {
   for (let i = 0; i <= 4; i += 1) {
@@ -113,6 +115,7 @@ const createResultsElements = () => {
 };
 window.addEventListener('load', () => {
   results = JSON.parse(localStorage.getItem('best results')) || [];
+  sortResult();
   createResultsElements();
 });
 const saveGameLocalStorage = () => {
@@ -132,13 +135,16 @@ const updateBestResults = (valueImages) => {
   // Получить ранее сохраненный массив из localStorage
   results = JSON.parse(localStorage.getItem('best results')) || [];
 
+  if (results.length >= 5) {
+    results.shift();
+  }
   // Добавить текущий результат в массив
   results.push(`Template ${data[valueImages].name} in ${timerElement.innerHTML} seconds.`);
 
   // Сохранить обновленный массив в localStorage
-  sortResult();
-  localStorage.setItem('best results', JSON.stringify(results));
 
+  localStorage.setItem('best results', JSON.stringify(results));
+  sortResult();
   for (let i = 0; i <= 4; i += 1) {
     arrResultNumber[i].innerText = `${i + 1}.`;
     arrResultValue[i].innerText = results[i];
@@ -149,26 +155,17 @@ const updateBestResults = (valueImages) => {
 };
 const unmuteSound = () => {
   if (isVolume) {
-    clickSound.volume = 0.4;
-    clickSound2.volume = 0.4;
-    clickRightSound.volume = 0.4;
-    victorySound.volume = 0.4;
-    clickSettingsSound.volume = 0.4;
+    sounds.forEach((sound) => (sound.volume = 0.4));
     sound.innerText = 'sound off';
     isVolume = false;
   } else {
-    clickSound.volume = 0;
-    clickSound2.volume = 0;
-    clickRightSound.volume = 0;
-    victorySound.volume = 0;
-    clickSettingsSound.volume = 0;
+    sounds.forEach((sound) => (sound.volume = 0));
     isVolume = true;
     sound.innerText = 'sound on';
   }
 };
 // -- таймер
-let minutes = 0;
-let seconds = 0;
+
 function startTimer() {
   timerInterval = setInterval(() => {
     timer += 1;
@@ -233,7 +230,6 @@ const showSolution = (dataMatrix, level) => {
   }
 };
 
-let isResult = false;
 const game = (dataMatrix, level) => {
   const matrixImage = dataMatrix[0];
   for (let i = 0; i < level; i += 1) {
@@ -290,10 +286,12 @@ const game = (dataMatrix, level) => {
         ) {
           victoryMessage.textContent = `Great! You have solved the nonogram in ${timerElement.innerHTML} seconds!`;
           victoryMessage.classList.add('victory-message--open');
+          playingFieldWrapper.classList.add('playing-field-wrapper--blocked');
           victorySound.play();
           arrClicks = [];
           if (!isResult) {
             updateBestResults(0);
+
             isResult = true;
           }
           isResult = false;
@@ -338,6 +336,7 @@ playingFieldLeftCluesWrapper.append(playingFieldLeftWrapper, playingFieldWrapper
 //--
 
 // алгоритм отрисовки матриц и победы
+
 let isRes = false;
 const creatingMatrices = (dataMatrix, numberImages) => {
   let arrayGuessedCells1 = [];
@@ -387,6 +386,7 @@ const creatingMatrices = (dataMatrix, numberImages) => {
           victoryMessage.textContent = `Great! You have solved the nonogram in ${timerElement.innerHTML} seconds!`;
           victorySound.play();
           victoryMessage.classList.add('victory-message--open');
+          playingFieldWrapper.classList.add('playing-field-wrapper--blocked');
           arrClicks = [];
           stopTimer();
           if (!isRes) {
@@ -449,6 +449,7 @@ selectFormImages.addEventListener('change', () => {
   });
   arrClicks = [];
   clickSettingsSound.play();
+  playingFieldWrapper.classList.remove('playing-field-wrapper--blocked');
 });
 
 resetGame.addEventListener('click', () => {
@@ -458,6 +459,7 @@ resetGame.addEventListener('click', () => {
     isTimer = false;
   });
   clickSettingsSound.play();
+  playingFieldWrapper.classList.remove('playing-field-wrapper--blocked');
 });
 
 solutionBtn.addEventListener('click', () => {
@@ -472,6 +474,7 @@ randomGame.addEventListener('click', () => {
   });
   clickSettingsSound.play();
   arrClicks = [];
+  playingFieldWrapper.classList.remove('playing-field-wrapper--blocked');
 });
 
 sound.addEventListener('click', () => {
@@ -497,6 +500,7 @@ saveGame.addEventListener('click', () => {
 });
 
 continueLastGame.addEventListener('click', () => {
+  playingFieldWrapper.classList.remove('playing-field-wrapper--blocked');
   clickSettingsSound.play();
   loadSavedGame();
 });

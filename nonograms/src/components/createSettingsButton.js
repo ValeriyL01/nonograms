@@ -74,6 +74,8 @@ const createSettingsButtons = () => {
     'snowflake(5x5)',
     'tower(5x5)',
     'window(5x5)',
+    'camel(5x5)',
+    'stroller(5x5)',
   ];
   for (let i = 0; i < nameImages.length; i += 1) {
     optionFormImage = createElement('option', 'settings__form-option');
@@ -84,8 +86,8 @@ const createSettingsButtons = () => {
     selectFormImages.append(optionFormImage);
   }
   //--
-
-  levelsForm.append(labelFormLevels, selectFormLevels, labelFormImages, selectFormImages);
+  //                 labelFormLevels, selectFormLevels
+  levelsForm.append(labelFormImages, selectFormImages);
   settings.append(settingsButtonWrapper, levelsForm);
   settingsButtonWrapper.append(resetGame, solutionBtn, saveGame, continueLastGame, randomGame, themeGame, sound);
   return settings;
