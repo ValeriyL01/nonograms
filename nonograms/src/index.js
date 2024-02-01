@@ -60,12 +60,13 @@ const arrCellLeft = []; // массив html элементов подсказо
 let arrayGuessedCells = [];
 let arrayEmptyCells = [];
 let arrClicks = [];
+let arrRightClicks = [];
 const arrResultElements = [];
 const arrResultNumber = [];
 const arrResultValue = [];
 const selectValueLevels = selectFormLevels.value;
 let selectValueImages = selectFormImages.value;
-console.log(selectValueLevels);
+
 let results;
 timerElement.innerText = '00:00';
 bestResults.innerText = 'Best results:';
@@ -121,6 +122,7 @@ window.addEventListener('load', () => {
 const saveGameLocalStorage = () => {
   localStorage.setItem('game', JSON.stringify(selectValueImages));
   localStorage.setItem('clicks', JSON.stringify(arrClicks));
+  localStorage.setItem('rightClicks', JSON.stringify(arrRightClicks));
   localStorage.setItem('arrayGuessedCells', JSON.stringify(arrayGuessedCells));
   localStorage.setItem('arrayEmptyCells', JSON.stringify(arrayEmptyCells));
 };
@@ -214,6 +216,8 @@ const resetGames = (level) => {
   timerElement.innerHTML = '00:00';
   victoryMessage.textContent = '';
   stopTimer();
+  arrayGuessedCells = [];
+  arrayEmptyCells = [];
 };
 
 const showSolution = (dataMatrix, level) => {
@@ -240,8 +244,6 @@ const game = (dataMatrix, level) => {
       cell.textContent = '';
       playingFieldWrapper.append(cell);
       arrCellMatrix[i][j] = cell;
-      let isClick = false;
-      let isClickEmptyCells = false;
 
       playingFieldWrapper.addEventListener('click', (event) => {
         isSaveGame = true;
@@ -251,30 +253,21 @@ const game = (dataMatrix, level) => {
           if (cell.classList.contains('cell--activ')) {
             clickSound.play();
             arrClicks.push([i, j]);
+            // ---  алгоритм победы
+            if (matrixImage.matrix[i][j] === 1) {
+              arrayGuessedCells.push(1);
+            }
+            if (matrixImage.matrix[i][j] === 0) {
+              arrayEmptyCells.push(1);
+            }
           } else {
             clickSound2.play();
             arrClicks.pop([i, j]);
-          }
-
-          // ---  алгоритм победы
-          if (matrixImage.matrix[i][j] === 1) {
-            if (!isClick) {
-              arrayGuessedCells.push(1);
-              isClick = true;
-            } else {
+            if (matrixImage.matrix[i][j] === 0) {
               arrayGuessedCells.pop(1);
-              isClick = false;
             }
-          }
-          if (matrixImage.matrix[i][j] === 0) {
-            if (!isClickEmptyCells) {
-              arrayEmptyCells.push(1);
-
-              isClickEmptyCells = true;
-            } else {
+            if (matrixImage.matrix[i][j] === 0) {
               arrayEmptyCells.pop(1);
-
-              isClickEmptyCells = false;
             }
           }
         }
@@ -289,6 +282,7 @@ const game = (dataMatrix, level) => {
           playingFieldWrapper.classList.add('playing-field-wrapper--blocked');
           victorySound.play();
           arrClicks = [];
+          arrRightClicks = [];
           if (!isResult) {
             updateBestResults(0);
 
@@ -308,9 +302,11 @@ const game = (dataMatrix, level) => {
         event.preventDefault();
         if (!isRightClick) {
           cell.classList.add('cell--active-cross');
+          arrRightClicks.push([i, j]);
           isRightClick = true;
         } else {
           cell.classList.remove('cell--active-cross');
+          arrRightClicks.pop([i, j]);
           isRightClick = false;
         }
         clickRightSound.play();
@@ -350,33 +346,26 @@ const creatingMatrices = (dataMatrix, numberImages) => {
       arrCellMatrix[i][j].classList.remove('cell--active-cross');
 
       //  arrCellMatrix[i][j].textContent = matrixImage.matrix[i][j];
-      let isClick = false;
-      let isClickEmptyCells = false;
+
       playingFieldWrapper.addEventListener('click', (event) => {
         isSaveGame = true;
         if (event.target === arrCellMatrix[i][j]) {
           // ---  алгоритм победы
           if (matrixImage.matrix[i][j] === 1) {
-            if (!isClick) {
+            if (arrCellMatrix[i][j].classList.contains('cell--activ')) {
               arrayGuessedCells1.push(1);
-              isClick = true;
             } else {
               arrayGuessedCells1.pop(1);
-              isClick = false;
             }
           }
           if (matrixImage.matrix[i][j] === 0) {
-            if (!isClickEmptyCells) {
+            if (arrCellMatrix[i][j].classList.contains('cell--activ')) {
               arrayEmptyCells1.push(1);
-
-              isClickEmptyCells = true;
             } else {
               arrayEmptyCells1.pop(1);
-              isClickEmptyCells = false;
             }
           }
         }
-
         if (
           matrixImage.units === arrayGuessedCells1.length &&
           arrayEmptyCells1.length === 0 &&
@@ -388,6 +377,7 @@ const creatingMatrices = (dataMatrix, numberImages) => {
           victoryMessage.classList.add('victory-message--open');
           playingFieldWrapper.classList.add('playing-field-wrapper--blocked');
           arrClicks = [];
+          arrRightClicks = [];
           stopTimer();
           if (!isRes) {
             updateBestResults(numberImages);
@@ -423,6 +413,9 @@ const loadSavedGame = () => {
   for (const click of JSON.parse(localStorage.getItem('clicks'))) {
     arrCellMatrix[click[0]][click[1]].classList.add('cell--activ');
   }
+  for (const rightClick of JSON.parse(localStorage.getItem('rightClicks'))) {
+    arrCellMatrix[rightClick[0]][rightClick[1]].classList.add('cell--active-cross');
+  }
   arrayGuessedCells = JSON.parse(localStorage.getItem('arrayGuessedCells'));
   arrayEmptyCells = JSON.parse(localStorage.getItem('arrayEmptyCells'));
 };
@@ -448,6 +441,7 @@ selectFormImages.addEventListener('change', () => {
     isTimer = false;
   });
   arrClicks = [];
+  arrRightClicks = [];
   clickSettingsSound.play();
   playingFieldWrapper.classList.remove('playing-field-wrapper--blocked');
 });
@@ -474,6 +468,7 @@ randomGame.addEventListener('click', () => {
   });
   clickSettingsSound.play();
   arrClicks = [];
+  arrRightClicks = [];
   playingFieldWrapper.classList.remove('playing-field-wrapper--blocked');
 });
 
@@ -492,6 +487,7 @@ saveGame.addEventListener('click', () => {
     localStorage.removeItem('clicks');
     saveGameLocalStorage();
     arrClicks = [];
+    arrRightClicks = [];
     arrayGuessedCells = [];
     arrayEmptyCells = [];
     clickSettingsSound.play();
