@@ -60,7 +60,7 @@ body {
   display: flex;
   max-width: calc(var(--width-cell) * 5 + 10px);
   flex-wrap: wrap;
-  background-color: white;
+
   cursor: pointer;
 }
 .playing-field-wrapper--blocked {
@@ -93,8 +93,10 @@ body {
   border-bottom: 2px solid black;
 }
 .timer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   padding-right: 20px;
-  padding-top: 35px;
 }
 .settings {
   display: flex;

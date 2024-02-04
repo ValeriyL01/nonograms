@@ -274,7 +274,6 @@ const game = (dataMatrix, level) => {
         if (
           matrixImage.units === arrayGuessedCells.length &&
           arrayEmptyCells.length === 0 &&
-          matrixImage.units !== 0 &&
           arrayGuessedCells.length !== 0
         ) {
           victoryMessage.textContent = `Great! You have solved the nonogram in ${timerElement.innerHTML} seconds!`;
@@ -295,7 +294,6 @@ const game = (dataMatrix, level) => {
         }
         //-------
       });
-
       // клик правой кнопкой мыши
       let isRightClick = false;
       cell.addEventListener('contextmenu', (event) => {
@@ -321,18 +319,7 @@ const game = (dataMatrix, level) => {
 game(data, selectValueLevels);
 playingFieldLeftCluesWrapper.append(playingFieldLeftWrapper, playingFieldWrapper);
 
-// --выбор уровня игры
-// selectFormLevels.addEventListener('change', () => {
-//   selectValueLevels = selectFormLevels.value;
-
-//   playingFieldWrapper.classList.add('playing-field-wrapper10');
-//   topCluesWrapper.classList.add('top-clues-wrapper10');
-//   playingFieldLeftWrapper.classList.add('playing-field-left-wrapper10');
-// });
-//--
-
 // алгоритм отрисовки матриц и победы
-
 let isRes = false;
 const creatingMatrices = (dataMatrix, numberImages) => {
   let arrayGuessedCells1 = [];
@@ -344,8 +331,6 @@ const creatingMatrices = (dataMatrix, numberImages) => {
     for (let j = 0; j < 5; j += 1) {
       arrCellMatrix[i][j].classList.remove('cell--activ');
       arrCellMatrix[i][j].classList.remove('cell--active-cross');
-
-      //  arrCellMatrix[i][j].textContent = matrixImage.matrix[i][j];
 
       playingFieldWrapper.addEventListener('click', (event) => {
         isSaveGame = true;
@@ -366,16 +351,22 @@ const creatingMatrices = (dataMatrix, numberImages) => {
             }
           }
         }
+
+        resetGame.addEventListener('click', () => {
+          arrayGuessedCells1 = [];
+          arrayEmptyCells1 = [];
+        });
         if (
           matrixImage.units === arrayGuessedCells1.length &&
           arrayEmptyCells1.length === 0 &&
-          matrixImage.units !== 0 &&
           arrayGuessedCells1.length !== 0
         ) {
           victoryMessage.textContent = `Great! You have solved the nonogram in ${timerElement.innerHTML} seconds!`;
           victorySound.play();
           victoryMessage.classList.add('victory-message--open');
           playingFieldWrapper.classList.add('playing-field-wrapper--blocked');
+          arrayGuessedCells1 = [];
+          arrayEmptyCells1 = [];
           arrClicks = [];
           arrRightClicks = [];
           stopTimer();
@@ -385,9 +376,6 @@ const creatingMatrices = (dataMatrix, numberImages) => {
             isRes = true;
           }
           isRes = false;
-
-          arrayGuessedCells1 = [];
-          arrayEmptyCells1 = [];
         }
         //-------
       });
@@ -490,9 +478,9 @@ saveGame.addEventListener('click', () => {
     arrRightClicks = [];
     arrayGuessedCells = [];
     arrayEmptyCells = [];
-    clickSettingsSound.play();
     isSaveGame = false;
   }
+  clickSettingsSound.play();
 });
 
 continueLastGame.addEventListener('click', () => {
