@@ -1,4 +1,4 @@
-Link to video: https://youtu.be/1BHaBacpoLE
+Link to video: [link to youtube video](https://youtu.be/1BHaBacpoLE)
 
 Hi, my name is Valery. I am twenty eight years old. I am from Belarus, I graduated from Vitebsk Polytechnic College in two thousand fifteen. My major is electrical technician. I am doing electrical measurements
 
