@@ -283,7 +283,9 @@ const game = (dataMatrix, level) => {
           arrClicks = [];
           arrRightClicks = [];
           if (!isResult) {
-            updateBestResults(0);
+            if (selectValueImages === '0') {
+              updateBestResults(0);
+            }
 
             isResult = true;
           }
@@ -371,7 +373,9 @@ const creatingMatrices = (dataMatrix, numberImages) => {
           arrRightClicks = [];
           stopTimer();
           if (!isRes) {
-            updateBestResults(numberImages);
+            if (selectValueImages !== '0') {
+              updateBestResults(numberImages);
+            }
 
             isRes = true;
           }
